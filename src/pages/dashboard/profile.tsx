@@ -57,11 +57,11 @@ const ProfilePage = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="flex flex-col">
-            <CardBox className="mb-6">
+            {/* <CardBox className="mb-6">
               <FormField label="Avatar" help="Max 500kb">
                 <FormFilePicker label="Upload" color="info" icon={mdiUpload} />
               </FormField>
-            </CardBox>
+            </CardBox> */}
 
             <CardBox className="flex-1" hasComponentLayout>
               <Formik

@@ -22,7 +22,7 @@ export default function SectionTitleLineWithButton({ icon, title, main = false, 
         <h1 className={`leading-tight ${main ? 'text-3xl' : 'text-2xl'}`}>{title}</h1>
       </div>
       {children}
-      {!hasChildren && <Button icon={mdiCog} color="whiteDark" />}
+      {/* {!hasChildren && <Button icon={mdiCog} color="whiteDark" />} */}
     </section>
   )
 }

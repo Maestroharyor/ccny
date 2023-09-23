@@ -1,3 +1,4 @@
+import LoginForm from '@/components/partials/auth/LoginForm'
 import HomeAbout from '@/components/partials/home/HomeAbout'
 import HomeCTA from '@/components/partials/home/HomeCTA'
 import HomeHero from '@/components/partials/home/HomeHero'
@@ -12,19 +13,11 @@ const HomePage = () => {
   return (
     <>
       <Head>
-        <title>{getPageTitle('Welcome to CCNY')}</title>
+        <title>{getPageTitle('Login To Your Account')}</title>
       </Head>
-      <HomeHero />
-      <HomeAbout />
-      <HomeValues />
-      <HomeMoreDetails />
-      <HomeCTA />
+      <LoginForm />
     </>
   )
-}
-
-HomePage.getLayout = function getLayout(page: ReactElement) {
-  return <Landing>{page}</Landing>
 }
 
 export default HomePage

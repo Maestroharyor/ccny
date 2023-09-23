@@ -6,7 +6,15 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { store } from '../stores/store'
 import { Provider } from 'react-redux'
-import '../css/main.css'
+import '@fontsource/koho/200.css'
+import '@fontsource/koho/300.css'
+import '@fontsource/koho/400.css'
+import '@fontsource/koho/500.css'
+import '@fontsource/koho/600.css'
+import '@fontsource/koho/700.css'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import '../css/main.scss'
 
 export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -20,9 +28,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout || ((page) => page)
 
-  const title = `Admin One React Tailwind free`
+  const title = `CCNY`
 
-  const description = 'Admin One - free React Next Tailwind dashboard with TypeScript and dark mode'
+  const description = 'CCNY Registration Website'
 
   const url = 'https://justboil.github.io/admin-one-react-tailwind/'
 
@@ -55,7 +63,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             <meta property="twitter:image:width" content={imageWidth} />
             <meta property="twitter:image:height" content={imageHeight} />
 
-            <link rel="icon" href="/admin-one-react-tailwind/favicon.png" />
+            <link rel="icon" href="/images/logo.png" />
           </Head>
 
           {/* <Script

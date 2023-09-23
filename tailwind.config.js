@@ -11,6 +11,9 @@ module.exports = {
       gray: 'gray',
     },
     extend: {
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      },
       zIndex: {
         '-1': '-1',
       },
@@ -42,6 +45,7 @@ module.exports = {
     },
   },
   plugins: [
+    require('kutty'),
     require('@tailwindcss/forms'),
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(

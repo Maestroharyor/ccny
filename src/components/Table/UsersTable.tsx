@@ -1,22 +1,22 @@
 import { mdiEye, mdiTrashCan } from '@mdi/js'
 import React, { useState } from 'react'
-import { useSampleClients } from '../../hooks/sampleData'
+import { useSampleUsers } from '../../hooks/sampleData'
 import { Client } from '../../interfaces'
 import Button from '../Button'
 import Buttons from '../Buttons'
 import CardBoxModal from '../CardBox/Modal'
 import UserAvatar from '../UserAvatar'
 
-const TableSampleClients = () => {
-  const { clients } = useSampleClients()
+const UsersTable = () => {
+  const { users } = useSampleUsers()
 
   const perPage = 5
 
   const [currentPage, setCurrentPage] = useState(0)
 
-  const clientsPaginated = clients.slice(perPage * currentPage, perPage * (currentPage + 1))
+  const usersPaginated = users.slice(perPage * currentPage, perPage * (currentPage + 1))
 
-  const numPages = clients.length / perPage
+  const numPages = users.length / perPage
 
   const pagesList = []
 
@@ -48,7 +48,7 @@ const TableSampleClients = () => {
         <p>This is sample modal</p>
       </CardBoxModal>
 
-      <CardBoxModal
+      {/* <CardBoxModal
         title="Please confirm"
         buttonColor="danger"
         buttonLabel="Confirm"
@@ -60,38 +60,72 @@ const TableSampleClients = () => {
           Lorem ipsum dolor sit amet <b>adipiscing elit</b>
         </p>
         <p>This is sample modal</p>
-      </CardBoxModal>
+      </CardBoxModal> */}
+
+      <div className="my-5 px-5">
+        <div className="relative">
+          <label htmlFor="Search" className="sr-only">
+            {' '}
+            Search{' '}
+          </label>
+
+          <input
+            type="text"
+            id="Search"
+            placeholder="Search for youth..."
+            className="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm dark:bg-gray-900 dark:border-gray-800"
+          />
+
+          <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+            <button type="button" className="text-gray-600 hover:text-gray-700">
+              <span className="sr-only">Search</span>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="h-4 w-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                />
+              </svg>
+            </button>
+          </span>
+        </div>
+      </div>
 
       <table>
         <thead>
           <tr>
             <th />
             <th>Name</th>
-            <th>Company</th>
-            <th>City</th>
-            <th>Progress</th>
-            <th>Created</th>
+            <th>Email Address</th>
+            <th>Phone Number</th>
+            <th>Portfolio</th>
+            <th>Zone</th>
+            <th>Date of Birth</th>
+            <th>Date Registered</th>
             <th />
           </tr>
         </thead>
         <tbody>
-          {clientsPaginated.map((client: Client) => (
+          {usersPaginated.map((client: Client) => (
             <tr key={client.id}>
               <td className="border-b-0 lg:w-6 before:hidden">
                 <UserAvatar username={client.name} className="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
               </td>
               <td data-label="Name">{client.name}</td>
-              <td data-label="Company">{client.company}</td>
-              <td data-label="City">{client.city}</td>
-              <td data-label="Progress" className="lg:w-32">
-                <progress
-                  className="flex w-2/5 self-center lg:w-full"
-                  max="100"
-                  value={client.progress}
-                >
-                  {client.progress}
-                </progress>
-              </td>
+              <td data-label="Email Address">{'johndoe@example.com'}</td>
+              <td data-label="Phone Number">{'+2349032454463'}</td>
+              <td data-label="Portfolio">{'Portfolio details'}</td>
+              <td data-label="Zone">{client.city}</td>
+              <td data-label="Date of Birth">{'25/05/1993'}</td>
+
               <td data-label="Created" className="lg:w-1 whitespace-nowrap">
                 <small className="text-gray-500 dark:text-slate-400">{client.created}</small>
               </td>
@@ -103,12 +137,12 @@ const TableSampleClients = () => {
                     onClick={() => setIsModalInfoActive(true)}
                     small
                   />
-                  <Button
+                  {/* <Button
                     color="danger"
                     icon={mdiTrashCan}
                     onClick={() => setIsModalTrashActive(true)}
                     small
-                  />
+                  /> */}
                 </Buttons>
               </td>
             </tr>
@@ -138,4 +172,4 @@ const TableSampleClients = () => {
   )
 }
 
-export default TableSampleClients
+export default UsersTable

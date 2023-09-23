@@ -1,0 +1,24 @@
+@import 'tailwind/_base.css';
+@import 'tailwind/_components.css';
+@import 'tailwind/_utilities.css';
+
+@import '_checkbox-radio-switch.css';
+@import '_progress.css';
+@import '_scrollbars.css';
+@import '_table.css';
+
+html,
+body {
+  font-family: 'koHo', sans-serif;
+  scroll-behavior: smooth;
+}
+
+.slick-arrow {
+  z-index: 10;
+  &.slick-prev {
+    left: 35px !important;
+  }
+  &.slick-next {
+    right: 35px !important;
+  }
+}
