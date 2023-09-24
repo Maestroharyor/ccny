@@ -1,8 +1,8 @@
-import AccountHeader from '@/components/partials/account/AccountHeader'
 import AccountPage from '@/components/partials/account/AccountPage'
 import { getPageTitle } from '@/config'
+import AccountLayout from '@/layouts/Account'
 import Head from 'next/head'
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 const Account = () => {
   return (
@@ -10,10 +10,13 @@ const Account = () => {
       <Head>
         <title>{getPageTitle('Account')}</title>
       </Head>
-      <AccountHeader />
       <AccountPage />
     </>
   )
+}
+
+Account.getLayout = function getLayout(page: ReactElement) {
+  return <AccountLayout>{page}</AccountLayout>
 }
 
 export default Account

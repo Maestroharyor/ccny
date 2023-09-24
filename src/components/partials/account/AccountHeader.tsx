@@ -1,8 +1,20 @@
+import { logOut } from '@/stores/mainSlice'
+import { RootState } from '@/stores/store'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 const AccountHeader = () => {
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+  const user = useSelector((state: RootState) => state.main)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [form, setForm] = useState({
+    email: '',
+    phoneNumber: '',
+    password: '',
+  })
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
@@ -41,7 +53,10 @@ const AccountHeader = () => {
             </div>
             <div className="hidden md:block">
               <div className="ml-4 flex items-center md:ml-6">
-                <button className="text-red-300 hover:bg-gray-700  px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition-all duration-300 ease-in-out">
+                <button
+                  className="text-red-300 hover:bg-gray-700  px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition-all duration-300 ease-in-out"
+                  onClick={() => logOut()}
+                >
                   <span>Logout</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -92,8 +107,8 @@ const AccountHeader = () => {
                     aria-hidden="true"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
                     />
                   </svg>
@@ -107,7 +122,7 @@ const AccountHeader = () => {
                   stroke="currentColor"
                   aria-hidden="true"
                 >
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
@@ -137,7 +152,9 @@ const AccountHeader = () => {
 
       <header className="bg-white shadow">
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Hello, Maestro</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+            Hello, {user.firstName}
+          </h1>
         </div>
       </header>
     </div>

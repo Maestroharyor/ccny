@@ -2,20 +2,41 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { UserPayloadObject } from '../interfaces'
 
 interface MainState {
-  userName: string
-  userEmail: null | string
-  userAvatar: null | string
-  isFieldFocusRegistered: boolean
+  firstName: string
+  lastName: string
+  email: string
+  _id: string
+  amountPaid: number
+  dateOfBirth: string
+  password: string
+  paymentTransaction: string
+  paymentTransactionReference: string
+  phoneNumber: string
+  portfolio: string
+  uniqueCode: string
+  zone: string
+  token: string
+  gender: string
+  isLoggedIn: boolean
 }
 
 const initialState: MainState = {
-  /* User */
-  userName: '',
-  userEmail: null,
-  userAvatar: null,
-
-  /* Field focus with ctrl+k (to register only once) */
-  isFieldFocusRegistered: false,
+  firstName: '',
+  lastName: '',
+  email: '',
+  _id: '',
+  amountPaid: 0,
+  dateOfBirth: '',
+  password: '',
+  paymentTransaction: '',
+  paymentTransactionReference: '',
+  phoneNumber: '',
+  portfolio: '',
+  uniqueCode: '',
+  zone: '',
+  token: '',
+  gender: '',
+  isLoggedIn: false,
 }
 
 export const mainSlice = createSlice({
@@ -23,14 +44,45 @@ export const mainSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<UserPayloadObject>) => {
-      state.userName = action.payload.name
-      state.userEmail = action.payload.email
-      state.userAvatar = action.payload.avatar
+      state.firstName = action.payload.user.firstName
+      state.lastName = action.payload.user.lastName
+      state.email = action.payload.user.email
+      state._id = action.payload.user._id
+      state.amountPaid = action.payload.user.amountPaid
+      state.dateOfBirth = action.payload.user.dateOfBirth
+      state.password = action.payload.user.password
+      state.paymentTransaction = action.payload.user.paymentTransaction
+      state.paymentTransactionReference = action.payload.user.paymentTransactionReference
+      state.phoneNumber = action.payload.user.phoneNumber
+      state.portfolio = action.payload.user.portfolio
+      state.uniqueCode = action.payload.user.uniqueCode
+      state.zone = action.payload.user.zone
+      state.token = action.payload.token
+      state.gender = action.payload.user.gender
+      state.isLoggedIn = true
+    },
+    logOut: (state) => {
+      state.firstName = ''
+      state.lastName = ''
+      state.email = ''
+      state._id = ''
+      state.amountPaid = 0
+      state.dateOfBirth = ''
+      state.password = ''
+      state.paymentTransaction = ''
+      state.paymentTransactionReference = ''
+      state.phoneNumber = ''
+      state.portfolio = ''
+      state.uniqueCode = ''
+      state.zone = ''
+      state.token = ''
+      state.gender = ''
+      state.isLoggedIn = false
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setUser } = mainSlice.actions
+export const { setUser, logOut } = mainSlice.actions
 
 export default mainSlice.reducer

@@ -2,8 +2,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import connectDB from '@/db'
 import User from '@/models/User'
-import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { generateRandomCode } from '@/utils'
 
 connectDB()
 
@@ -20,10 +20,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         dateOfBirth,
         zone,
         password,
+        paymentTransaction,
+        paymentTransactionReference,
+        userRole,
       } = req.body
 
       // Generate a unique 6-digit alphanumeric code (You can use a library like shortid)
-      const uniqueCode = 'ABC123' // Replace with actual code generation logic
+      const uniqueCode = generateRandomCode(6) // Replace with actual code generation logic
 
       // Check if email, phone number, and uniqueCode are unique
       const existingUser = await User.findOne({
@@ -48,17 +51,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         zone,
         uniqueCode,
         password,
+        paymentTransaction,
+        paymentTransactionReference,
+        userRole: userRole ? userRole : 'user',
       })
 
-      // Hash the password before saving the user
-      const salt = await bcrypt.genSalt(10)
-      const hashedPassword = await bcrypt.hash(password, salt)
-      user.password = hashedPassword
+      await user.save()
 
       // Generate a token for authentication
-      const token = jwt.sign({ userId: user._id }, 'your-secret-key') // Replace with your secret key
-
-      await user.save()
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET) // Replace with your secret key
 
       res.status(201).json({
         success: true,
@@ -66,7 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         data: { user, token }, // Include both user data and token
       })
     } catch (error) {
-      res.status(500).json({
+      res.status(400).json({
         success: false,
         message: 'Registration failed',
         error: error.message,

@@ -1,12 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
 import styleReducer from './styleSlice'
 import mainReducer from './mainSlice'
+import storage from 'redux-persist/lib/storage' // defaults to local storage
+
+const reducer = {
+  style: styleReducer,
+  main: mainReducer,
+}
 
 export const store = configureStore({
-  reducer: {
-    style: styleReducer,
-    main: mainReducer,
-  },
+  reducer,
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -14,12 +14,14 @@ interface IUser extends Document {
   userRole: string
   uniqueCode: string
   password: string
+  paymentTransaction: string
+  paymentTransactionReference: string
 }
 
 const userSchema = new mongoose.Schema<IUser>({
   firstName: String,
   lastName: String,
-  email: { type: String, unique: true },
+  email: { type: String, unique: true, lowercase: true },
   phoneNumber: { type: String, unique: true },
   portfolio: String,
   amountPaid: Number,
@@ -27,6 +29,7 @@ const userSchema = new mongoose.Schema<IUser>({
   userRole: {
     type: String,
     enum: ['admin', 'user'],
+    default: 'user',
   },
   zone: String,
   uniqueCode: String,
@@ -34,6 +37,8 @@ const userSchema = new mongoose.Schema<IUser>({
     type: String,
     unique: true,
   },
+  paymentTransaction: String,
+  paymentTransactionReference: String,
 })
 
 // Hash the password before saving the user
