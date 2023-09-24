@@ -13,7 +13,7 @@ const HomeHeroSlide2 = () => {
                 Welcome To National Youth & Students Convention
               </h1>
               <p className="mx-auto mb-10 max-w-[600px] text-base text-[#e4e4e4] sm:text-lg sm:leading-relaxed md:text-xl md:leading-relaxed">
-                Don't miss out...
+                Don&apos;t miss out...
               </p>
 
               <Link

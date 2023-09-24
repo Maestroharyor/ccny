@@ -78,8 +78,8 @@ const Header = () => {
               >
                 {pathname === '/' && (
                   <ul className="block justify-center items-center lg:flex gap-10">
-                    {menus.map((menu, index) => (
-                      <li className="group relative">
+                    {menus.map((menu) => (
+                      <li className="group relative" key={menu.title}>
                         <a
                           href={menu.link}
                           className="ud-menu-scroll  flex py-2 text-md text-dark group-hover:text-primary lg:mr-0 lg:inline-flex lg:py-6 lg:px-0 lg:text-white lg:group-hover:text-white lg:group-hover:opacity-70"

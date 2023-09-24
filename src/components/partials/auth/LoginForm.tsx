@@ -85,7 +85,7 @@ const LoginForm = () => {
       <div className="w-full py-6 mx-auto md:w-3/5 lg:w-2/5">
         <h1 className="mb-1 text-xl font-medium text-center text-gray-800 md:text-3xl">Login</h1>
         <p className="mb-2 text-sm font-normal text-center text-gray-700 md:text-base flex gap-3 items-center justify-center">
-          <span>Don't have an account?</span>
+          <span>Don&apos;t have an account?</span>
 
           <Link href="/register" className="text-purple-700 hover:text-purple-900">
             Register
