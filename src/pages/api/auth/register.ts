@@ -26,6 +26,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         userRole,
       } = req.body
 
+      if (!email && !phoneNumber) {
+        return res.status(400).json({
+          success: false,
+          message: 'Email or phone number is required',
+        })
+      }
+
       // Generate a unique 6-digit alphanumeric code (You can use a library like shortid)
       const uniqueCode = generateRandomCode(6) // Replace with actual code generation logic
 

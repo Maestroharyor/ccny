@@ -45,7 +45,6 @@ const RegisterForm = () => {
     })
   }
 
-  console.log(form)
   const config = {
     reference: new Date().getTime().toString(),
     email: form.email,
@@ -170,7 +169,6 @@ const RegisterForm = () => {
               placeholder="Ex. james@bond.com"
               inputMode="email"
               name="email"
-              required
               onChange={handleChange}
             />
           </label>
@@ -181,7 +179,6 @@ const RegisterForm = () => {
               type="text"
               placeholder="+234900000000"
               name="phoneNumber"
-              required
               onChange={handleChange}
             />
           </label>
