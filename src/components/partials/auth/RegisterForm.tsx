@@ -30,7 +30,10 @@ const RegisterForm = () => {
   const [hasPaid, setHasPaid] = useState(false)
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLSelectElement>
   ) => {
     setForm({
       ...form,
