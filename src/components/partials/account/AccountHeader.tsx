@@ -3,10 +3,12 @@ import { RootState } from '@/stores/store'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 
 const AccountHeader = () => {
   const router = useRouter()
+  const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
   const user = useSelector((state: RootState) => state.main)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -17,6 +19,10 @@ const AccountHeader = () => {
   })
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
+  const logoutUser = () => {
+    dispatch(logOut())
+    router.push('/login')
   }
   return (
     <div className="min-h-full">
@@ -55,7 +61,7 @@ const AccountHeader = () => {
               <div className="ml-4 flex items-center md:ml-6">
                 <button
                   className="text-red-300 hover:bg-gray-700  px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition-all duration-300 ease-in-out"
-                  onClick={() => logOut()}
+                  onClick={logoutUser}
                 >
                   <span>Logout</span>
                   <svg
