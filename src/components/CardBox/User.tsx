@@ -5,13 +5,14 @@ import CardBox from '.'
 import FormCheckRadio from '../Form/CheckRadio'
 import PillTag from '../PillTag'
 import UserAvatarCurrentUser from '../UserAvatar/CurrentUser'
+import { RootState } from '@/stores/store'
 
 type Props = {
   className?: string
 }
 
 const CardBoxUser = ({ className }: Props) => {
-  const userName = useAppSelector((state) => state.main.userName)
+  const userName = useAppSelector((state: RootState) => state.main.firstName)
 
   return (
     <CardBox className={className}>
