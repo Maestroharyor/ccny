@@ -10,7 +10,7 @@ import { RootState } from '@/stores/store'
 import { useAppSelector } from '@/stores/hooks'
 import { useDispatch } from 'react-redux'
 
-const LoginForm = () => {
+const ResetPasswordForm = () => {
   const dispatch = useDispatch()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -166,8 +166,8 @@ const LoginForm = () => {
         </form>
 
         <p className="my-5 text-xs font-medium text-center text-gray-700">
-          Don&apos;t remember password?{' '}
-          <Link href="/forgot-password" className="text-purple-700 hover:text-purple-900">
+          Don&apos;t remember password?
+          <Link href="/reset-password" className="text-purple-700 hover:text-purple-900">
             Reset Password
           </Link>
           .
@@ -177,4 +177,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default ResetPasswordForm

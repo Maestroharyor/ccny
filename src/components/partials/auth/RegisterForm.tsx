@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { message } from 'antd'
+import { DatePicker, DatePickerProps, message } from 'antd'
 import axios from 'axios'
 import { FaCircleNotch } from 'react-icons/fa'
 import { usePaystackPayment } from 'react-paystack'
@@ -38,6 +38,14 @@ const RegisterForm = () => {
     })
   }
 
+  const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {
+    setForm({
+      ...form,
+      dateOfBirth: dateString,
+    })
+  }
+
+  console.log(form)
   const config = {
     reference: new Date().getTime().toString(),
     email: form.email,
@@ -209,13 +217,7 @@ const RegisterForm = () => {
 
           <label className="block">
             <span className="block mb-1 text-xs font-medium text-gray-700">Date of Birth</span>
-            <input
-              className="form-input"
-              type="date"
-              name="dateOfBirth"
-              required
-              onChange={handleChange}
-            />
+            <DatePicker onChange={onDateChange} className="w-full" size="large" />
           </label>
           <label className="block">
             <span className="block mb-1 text-xs font-medium text-gray-700">Create a password</span>
