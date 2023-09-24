@@ -7,7 +7,7 @@ const HomeHeroSlide1 = () => {
       <div className="container flex flex-col justify-center p-6 mx-auto  pb-20 pt-40 lg:flex-row lg:justify-between max-w-[1000px] ">
         <div className=" flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left">
           <h1
-            className="text-2xl font-bold sm:text-5xl leading-[3rem] capitalize"
+            className="text-3xl font-bold sm:text-5xl leading-[3rem] capitalize"
             style={{ lineHeight: '4rem' }}
           >
             Welcome To Christ&apos;s Chosen Church of God International
@@ -39,8 +39,9 @@ const HomeHeroSlide1 = () => {
             width={700}
             height={1000}
           />
-          <div className="absolute bottom-3 z-10 px-5 py-2 bg-gray-900/90 rounded text-sm text-white">
-            <p>Senior Apostle Unuefe Ikhuiwu</p>
+          <div className="absolute bottom-3 z-10 px-5 py-2 bg-gray-900/90 rounded text-sm text-white text-center space-y-1">
+            <p className="font-bold">SNR. APST. DR. D.E.O. Apostle Unuefe Ikhuiwu</p>
+            <p className="text-xs">The Elect of GOD/Spiritual Leader</p>
           </div>
         </div>
       </div>

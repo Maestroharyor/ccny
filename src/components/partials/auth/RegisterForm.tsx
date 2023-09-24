@@ -202,7 +202,7 @@ const RegisterForm = () => {
           <label className="block text-sm mb-1" htmlFor="gender">
             Gender
           </label>
-          <select className="form-select" id="gender" name="gender">
+          <select className="form-select" id="gender" name="gender" placeholder="Select gender">
             <option value={'male'}>Male</option>
             <option value={'female'}>Female</option>
           </select>
