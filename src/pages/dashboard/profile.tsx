@@ -24,10 +24,11 @@ import CardBoxUser from '@/components/CardBox/User'
 import type { UserForm } from '../../interfaces'
 import { getPageTitle } from '@/config'
 import { useAppSelector } from '@/stores/hooks'
+import { RootState } from '@/stores/store'
 
 const ProfilePage = () => {
-  const userName = useAppSelector((state) => state.main.userName)
-  const userEmail = useAppSelector((state) => state.main.userEmail)
+  const userName = useAppSelector((state: RootState) => state.main.firstName)
+  const userEmail = useAppSelector((state: RootState) => state.main.email)
 
   const userForm: UserForm = {
     name: userName,
