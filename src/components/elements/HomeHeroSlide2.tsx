@@ -42,7 +42,7 @@ const HomeHeroSlide2 = () => {
           >
             Welcome To National Youth & Students Convention
           </h1>
-          <div className="flex justify-start py-3">
+          <div className="flex justify-center lg:justify-start py-3">
             <Link
               href="/register"
               className="px-5 py-3 rounded border-white border flex items-center gap-3 w-fit hover:border-yellow-500 transition-all duration-300 ease-in-out hover:text-yellow-500"
