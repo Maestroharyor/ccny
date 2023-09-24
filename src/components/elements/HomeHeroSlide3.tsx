@@ -14,7 +14,7 @@ const HomeHeroSlide3 = () => {
             Gospel Music Talent Hunt
           </h1>
           <div>
-            <p className="mx-auto mb-10 max-w-[600px] text-xs text-[#e4e4e4]  sm:leading-relaxed  md:leading-relaxed flex items-center gap-2">
+            <p className="mx-auto mb-10 max-w-[600px] text-xs text-[#e4e4e4]  sm:leading-relaxed  md:leading-relaxed flex justify-center lg:justify-start items-center gap-2">
               <MdInfo />
               <span>Registration Closed</span>
             </p>
@@ -42,7 +42,7 @@ const HomeHeroSlide3 = () => {
             src="/images/talent-hunt.jpeg"
             alt=""
             // className="object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128 translate-y-[50px]"
-            className="translate-y-[50px]"
+            className="lg:translate-y-[50px]"
             width={700}
             height={1000}
           />
