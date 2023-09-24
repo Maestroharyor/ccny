@@ -1,21 +1,22 @@
 export type UserPayloadObject = {
   token: string
-  user: {
-    firstName: string
-    lastName: string
-    email: string
-    _id: string
-    amountPaid: number
-    dateOfBirth: string
-    password: string
-    paymentTransaction: string
-    paymentTransactionReference: string
-    phoneNumber: string
-    portfolio: string
-    uniqueCode: string
-    gender: string
-    zone: string
-  }
+  user: User
+}
+export type User = {
+  firstName: string
+  lastName: string
+  email: string
+  _id: string
+  amountPaid: number
+  dateOfBirth: string
+  password: string
+  paymentTransaction: string
+  paymentTransactionReference: string
+  phoneNumber: string
+  portfolio: string
+  uniqueCode: string
+  gender: string
+  zone: string
 }
 
 export type MenuAsideItem = {

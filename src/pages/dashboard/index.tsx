@@ -6,7 +6,7 @@ import {
   mdiMonitorCellphone,
 } from '@mdi/js'
 import Head from 'next/head'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import type { ReactElement } from 'react'
 import LayoutAuthenticated from '@/layouts/Authenticated'
 import SectionMain from '@/components/Section/Main'
@@ -18,20 +18,32 @@ import { sampleChartData } from '@/components/ChartLineSample/config'
 import NotificationBar from '@/components/NotificationBar'
 import UsersTable from '@/components/Table/UsersTable'
 import { getPageTitle } from '@/config'
+import StatsLoader from '@/components/skeletons/StatsLoader'
+import TableLoader from '@/components/skeletons/TableLoader'
+import useSWR from 'swr'
+import axios from 'axios'
+import { User } from '@/interfaces'
 
 const DashboardPage = () => {
-  const { users } = useSampleUsers()
-  const { transactions } = useSampleTransactions()
+  // const { users } = useSampleUsers()
+  const [users, setUsers] = useState<User[]>([])
 
   const clientsListed = users.slice(0, 4)
-
-  const [chartData, setChartData] = useState(sampleChartData())
-
-  const fillChartData = (e: React.MouseEvent) => {
-    e.preventDefault()
-
-    setChartData(sampleChartData())
+  const userFetcher = async (url) => {
+    const { data } = await axios.get(url) // Replace with your API endpoint
+    return data
   }
+
+  const {
+    data: userData,
+    isLoading: isUsersLoading,
+    error: userError,
+  } = useSWR('/api/users?role=users&per_page=30', userFetcher)
+  useEffect(() => {
+    if (userData) {
+      setUsers(userData.data)
+    }
+  }, [userData])
 
   return (
     <>
@@ -46,6 +58,8 @@ const DashboardPage = () => {
         ></SectionTitleLineWithButton>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6">
+          <StatsLoader />
+          <StatsLoader />
           <CardBoxWidget
             // trendLabel="12%"
             // trendType="up"
@@ -67,10 +81,19 @@ const DashboardPage = () => {
           />
         </div>
 
-        <SectionTitleLineWithButton icon={mdiAccountMultiple} title="Youths" />
-        <CardBox hasTable>
-          <UsersTable />
-        </CardBox>
+        <>
+          {isUsersLoading ? (
+            <TableLoader />
+          ) : (
+            <>
+              <SectionTitleLineWithButton icon={mdiAccountMultiple} title="Youths" />
+
+              <CardBox hasTable>
+                <UsersTable users={users} />
+              </CardBox>
+            </>
+          )}
+        </>
       </SectionMain>
     </>
   )

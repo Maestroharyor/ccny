@@ -1,15 +1,16 @@
 import { mdiEye, mdiTrashCan } from '@mdi/js'
 import React, { useState } from 'react'
 import { useSampleUsers } from '../../hooks/sampleData'
-import { Client } from '../../interfaces'
+import { Client, User } from '../../interfaces'
 import Button from '../Button'
 import Buttons from '../Buttons'
 import CardBoxModal from '../CardBox/Modal'
 import UserAvatar from '../UserAvatar'
 
-const UsersTable = () => {
-  const { users } = useSampleUsers()
-
+type Props = {
+  users: User[]
+}
+const UsersTable = ({ users }: Props) => {
   const perPage = 5
 
   const [currentPage, setCurrentPage] = useState(0)
@@ -102,7 +103,7 @@ const UsersTable = () => {
       <table>
         <thead>
           <tr>
-            <th />
+            {/* <th /> */}
             <th>Name</th>
             <th>Email Address</th>
             <th>Phone Number</th>
@@ -114,20 +115,25 @@ const UsersTable = () => {
           </tr>
         </thead>
         <tbody>
-          {usersPaginated.map((client: Client) => (
-            <tr key={client.id}>
-              <td className="border-b-0 lg:w-6 before:hidden">
-                <UserAvatar username={client.name} className="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
+          {usersPaginated.map((user: User) => (
+            <tr key={user._id}>
+              {/* <td className="border-b-0 lg:w-6 before:hidden">
+                <UserAvatar username={user.name} className="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
+              </td> */}
+              <td data-label="Name">
+                {user.firstName}
+                {user.lastName}
               </td>
-              <td data-label="Name">{client.name}</td>
-              <td data-label="Email Address">{'johndoe@example.com'}</td>
-              <td data-label="Phone Number">{'+2349032454463'}</td>
-              <td data-label="Portfolio">{'Portfolio details'}</td>
-              <td data-label="Zone">{client.city}</td>
-              <td data-label="Date of Birth">{'25/05/1993'}</td>
+              <td data-label="Email Address">{user.email}</td>
+              <td data-label="Phone Number">{user.phoneNumber}</td>
+              <td data-label="Portfolio">{user.portfolio}</td>
+              <td data-label="Zone">{user.zone}</td>
+              <td data-label="Date of Birth">{user.dateOfBirth}</td>
 
               <td data-label="Created" className="lg:w-1 whitespace-nowrap">
-                <small className="text-gray-500 dark:text-slate-400">{client.created}</small>
+                <small className="text-gray-500 dark:text-slate-400">
+                  {(user as any)?.createdAt}
+                </small>
               </td>
               <td className="before:hidden lg:w-1 whitespace-nowrap">
                 <Buttons type="justify-start lg:justify-end" noWrap>
