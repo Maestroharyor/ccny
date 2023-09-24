@@ -5,7 +5,7 @@ import { MdInfo } from 'react-icons/md'
 const HomeHeroSlide3 = () => {
   return (
     <section className=" ">
-      <div className="container flex flex-col justify-center p-6 mx-auto sm:py-12 lg:pb-20 lg:pt-40 lg:flex-row lg:justify-between max-w-[1000px] ">
+      <div className="container flex flex-col justify-center p-6 mx-auto  pb-20 pt-40 lg:flex-row lg:justify-between max-w-[1000px] ">
         <div className=" flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left gap-3">
           <h1
             className="text-2xl font-bold sm:text-5xl leading-[3rem] capitalize"
