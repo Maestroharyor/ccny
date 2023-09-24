@@ -22,6 +22,7 @@ const RegisterForm = () => {
     amountPaid: 0,
     dateOfBirth: '',
     zone: '',
+    gender: '',
     password: '',
     paymentTransaction: '',
     paymentTransactionReference: '',
@@ -198,6 +199,14 @@ const RegisterForm = () => {
               onChange={handleChange}
             ></textarea>
           </label>
+          <label className="block text-sm mb-1" htmlFor="gender">
+            Gender
+          </label>
+          <select className="form-select" id="gender" name="gender">
+            <option value={'male'}>Male</option>
+            <option value={'female'}>Female</option>
+          </select>
+
           <label className="block">
             <span className="block mb-1 text-xs font-medium text-gray-700">Date of Birth</span>
             <input
