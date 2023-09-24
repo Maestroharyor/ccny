@@ -25,16 +25,16 @@ const HomeAbout = () => {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 py-8 gap-10 text-base">
-          <div className=" px-5 py-3 rounded-lg text-center bg-blue-500 text-white shadow flex justify-center items-center">
+          <div className=" px-5 py-3 rounded-lg text-center bg-blue-600 text-white shadow flex justify-center items-center">
             <span>Evangelism</span>
           </div>
-          <div className=" px-5 py-3 rounded-lg text-center bg-purple-500 text-white shadow flex justify-center items-center">
+          <div className=" px-5 py-3 rounded-lg text-center bg-purple-600 text-white shadow flex justify-center items-center">
             <span>Church Planting</span>
           </div>
-          <div className=" px-5 py-3 rounded-lg text-center bg-gray-500 text-white shadow flex justify-center items-center">
+          <div className=" px-5 py-3 rounded-lg text-center bg-gray-600 text-white shadow flex justify-center items-center">
             <span>Discipleship Training programmes</span>
           </div>
-          <div className=" px-5 py-3 rounded-lg text-center bg-green-500 text-white shadow flex justify-center items-center">
+          <div className=" px-5 py-3 rounded-lg text-center bg-green-600 text-white shadow flex justify-center items-center">
             <span>Praying</span>
           </div>
         </div>
