@@ -10,7 +10,7 @@ const HomeHeroSlide1 = () => {
             className="text-2xl font-bold sm:text-5xl leading-[3rem] capitalize"
             style={{ lineHeight: '4rem' }}
           >
-            Welcome To Christ's Chosen Church of God International
+            Welcome To Christ&apos;s Chosen Church of God International
           </h1>
 
           {/* <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">

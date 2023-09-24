@@ -8,14 +8,15 @@ const HomeAbout = () => {
         <p className="text-center max-w-[800px] mx-auto  ">
           <span className="font-bold">
             {' '}
-            Christ's Chosen Church of God Int'l National Youth Movement
+            Christ&apos;s Chosen Church of God Int&apos;l National Youth Movement
           </span>{' '}
-          is the youth arm of <span className="font-bold">Christ's Chosen Church of God Int'l</span>
-          . The Church, Christ's Chosen Church of God Int'l, is one big family, a Pentecostal bible
-          believing, bible teaching church founded on the principle of holiness and purity wholly
-          committed to the propagation of the gospel of repentance, baptism by immersion, and the
-          power to witness for Christ by teaching the world the word to prepare them to meet their
-          creator.
+          is the youth arm of{' '}
+          <span className="font-bold">Christ&apos;s Chosen Church of God Int&apos;l</span>. The
+          Church, Christ&apos;s Chosen Church of God Int&apos;l, is one big family, a Pentecostal
+          bible believing, bible teaching church founded on the principle of holiness and purity
+          wholly committed to the propagation of the gospel of repentance, baptism by immersion, and
+          the power to witness for Christ by teaching the world the word to prepare them to meet
+          their creator.
         </p>
         <p className="text-center max-w-[800px] mx-auto ">
           The mission of the church is to communicate the full gospel of Jesus Christ (Matthew

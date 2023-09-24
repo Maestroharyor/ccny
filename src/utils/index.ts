@@ -1,4 +1,4 @@
-export function generateRandomCode(length: number = 6): string {
+export function generateRandomCode(length: number): string {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
   let code = ''
 

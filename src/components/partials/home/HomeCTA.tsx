@@ -6,7 +6,7 @@ const HomeCTA = () => {
     <section>
       <section className="grid items-center justify-center grid-cols-1 px-4 py-24 text-center lg:grid-cols-5">
         <div className=" lg:col-start-2 col-span-3">
-          <p className="mb-2 text-base font-semibold text-primary">Don't Miss Out!!!</p>
+          <p className="mb-2 text-base font-semibold text-primary">Don&apos;t Miss Out!!!</p>
           <h2 className="mb-6 font-serif text-3xl font-normal tracking-tight md:leading-tight md:text-4xl md:mb-6">
             Join other Youths in the National Youth Convention Today
           </h2>
