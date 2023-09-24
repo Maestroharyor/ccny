@@ -1,4 +1,5 @@
 import LoginForm from '@/components/partials/auth/LoginForm'
+import ResetPasswordForm from '@/components/partials/auth/ResetPasswordForm'
 import HomeAbout from '@/components/partials/home/HomeAbout'
 import HomeCTA from '@/components/partials/home/HomeCTA'
 import HomeHero from '@/components/partials/home/HomeHero'
@@ -15,7 +16,7 @@ const HomePage = () => {
       <Head>
         <title>{getPageTitle('Reset Account Password')}</title>
       </Head>
-      <LoginForm />
+      <ResetPasswordForm />
     </>
   )
 }

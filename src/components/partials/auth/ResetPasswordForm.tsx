@@ -83,7 +83,9 @@ const ResetPasswordForm = () => {
         </div>
       </header>
       <div className="w-full py-6 mx-auto md:w-3/5 lg:w-2/5">
-        <h1 className="mb-1 text-xl font-medium text-center text-gray-800 md:text-3xl">Login</h1>
+        <h1 className="mb-1 text-xl font-medium text-center text-gray-800 md:text-3xl">
+          Reset Password
+        </h1>
         <p className="mb-2 text-sm font-normal text-center text-gray-700 md:text-base flex gap-3 items-center justify-center">
           <span>Don&apos;t have an account?</span>
 
@@ -92,66 +94,17 @@ const ResetPasswordForm = () => {
           </Link>
         </p>
         <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
-          <div>
-            <div className="">
-              <nav className="flex justify-center gap-6" aria-label="Tabs">
-                {loginModes.map((mode) => (
-                  <a
-                    key={mode}
-                    className={`shrink-0 rounded-lg py-2 px-5 text-sm font-medium transition-all duration-300 ease-in-out cursor-pointer border ${
-                      loginMode === mode
-                        ? 'bg-primary text-white border-primary'
-                        : 'bg-white border-gray-500'
-                    }`}
-                    // aria-current={loginMode === mode ? 'page' : 'step'}
-                    onClick={() => setLoginMode(mode)}
-                  >
-                    {capitalizeFirstCharacter(mode)}
-                  </a>
-                ))}
-              </nav>
-            </div>
-          </div>
-
-          {loginMode === 'email' ? (
-            <label className="block">
-              <span className="block mb-1 text-xs font-medium text-gray-700">Your Email</span>
-              <input
-                className="form-input"
-                type="email"
-                placeholder="Ex. james@bond.com"
-                inputMode="email"
-                name="email"
-                required
-                onChange={handleChange}
-                value={form.email}
-              />
-            </label>
-          ) : (
-            <label className="block">
-              <span className="block mb-1 text-xs font-medium text-gray-700">Phone Number</span>
-              <input
-                className="form-input"
-                type="tel"
-                placeholder="+2349000000000"
-                inputMode="numeric"
-                name="phoneNumber"
-                required
-                onChange={handleChange}
-                value={form.phoneNumber}
-              />
-            </label>
-          )}
           <label className="block">
-            <span className="block mb-1 text-xs font-medium text-gray-700">Create a password</span>
+            <span className="block mb-1 text-xs font-medium text-gray-700">Your Email</span>
             <input
               className="form-input"
-              type="password"
-              placeholder="••••••••"
+              type="email"
+              placeholder="Ex. james@bond.com"
+              inputMode="email"
+              name="email"
               required
-              name="password"
               onChange={handleChange}
-              value={form.password}
+              value={form.email}
             />
           </label>
 
@@ -161,14 +114,14 @@ const ResetPasswordForm = () => {
             disabled={isLoading}
           >
             {isLoading && <FaCircleNotch className="animate-spin" />}
-            <span>{isLoading ? 'Logging in' : 'Log in'}</span>
+            <span>{isLoading ? 'Resetting' : 'Reset Password'}</span>
           </button>
         </form>
 
         <p className="my-5 text-xs font-medium text-center text-gray-700">
-          Don&apos;t remember password?
-          <Link href="/reset-password" className="text-purple-700 hover:text-purple-900">
-            Reset Password
+          Remembered password?{' '}
+          <Link href="/login" className="text-purple-700 hover:text-purple-900">
+            Back to Login
           </Link>
           .
         </p>
