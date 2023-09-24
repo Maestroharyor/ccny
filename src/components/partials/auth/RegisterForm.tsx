@@ -87,7 +87,7 @@ const RegisterForm = () => {
     setIsLoading(true)
     try {
       const { data } = await axios.post('/api/auth/register', form)
-      dispatch(setUser(data))
+      dispatch(setUser(data.data))
       message.success('Registration Successful')
       if (data?.data?.user?.userRole === 'user') {
         router.push('/account')

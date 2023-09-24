@@ -50,7 +50,7 @@ const LoginForm = () => {
     }
     try {
       const { data } = await axios.post('/api/auth/login', formData)
-      dispatch(setUser(data))
+      dispatch(setUser(data.data))
       message.success('Login Successful')
       if (data?.data?.user?.userRole === 'user') {
         router.push('/account')
