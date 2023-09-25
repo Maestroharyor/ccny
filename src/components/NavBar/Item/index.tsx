@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from '../../../stores/hooks'
 import { MenuNavBarItem } from '../../../interfaces'
 import { setDarkMode } from '../../../stores/styleSlice'
 import { RootState } from '@/stores/store'
+import { useRouter } from 'next/router'
+import { logOut } from '@/stores/mainSlice'
 
 type Props = {
   item: MenuNavBarItem
@@ -17,6 +19,11 @@ type Props = {
 
 export default function NavBarItem({ item }: Props) {
   const dispatch = useAppDispatch()
+  const router = useRouter()
+  const logoutUser = () => {
+    dispatch(logOut())
+    router.push('/login')
+  }
 
   const navBarItemLabelActiveColorStyle = useAppSelector(
     (state) => state.style.navBarItemLabelActiveColorStyle
@@ -46,6 +53,10 @@ export default function NavBarItem({ item }: Props) {
 
     if (item.isToggleLightDark) {
       dispatch(setDarkMode(null))
+    }
+
+    if (item.isLogout) {
+      logoutUser()
     }
   }
 
