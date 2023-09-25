@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const filter: any = {}
 
       if (role) {
-        filter.role = role
+        filter.userRole = role
       }
 
       if (search) {
@@ -27,7 +27,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         ]
       }
 
-      console.log(filter)
       const [users, totalCount] = await Promise.all([
         User.find(filter).skip(skip).limit(pageSize).select('-password').lean(), // Use lean() for improved query performance
         User.countDocuments(filter),

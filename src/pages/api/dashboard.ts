@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'GET') {
     try {
       // Get the total number of users
-      const totalUsers = await User.countDocuments()
+      const totalUsers = await User.countDocuments({ userRole: 'user' })
 
       // Calculate the total amountPaid among all users
       const users = await User.find({ userRole: 'user' })

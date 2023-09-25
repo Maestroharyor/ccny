@@ -18,28 +18,33 @@ interface IUser extends Document {
   paymentTransactionReference: string
 }
 
-const userSchema = new mongoose.Schema<IUser>({
-  firstName: String,
-  lastName: String,
-  email: { type: String, unique: true, lowercase: true },
-  phoneNumber: { type: String, unique: true },
-  portfolio: String,
-  amountPaid: Number,
-  dateOfBirth: Date,
-  userRole: {
-    type: String,
-    enum: ['admin', 'user'],
-    default: 'user',
+const userSchema = new mongoose.Schema<IUser>(
+  {
+    firstName: String,
+    lastName: String,
+    email: { type: String, unique: true, lowercase: true },
+    phoneNumber: { type: String, unique: true },
+    portfolio: String,
+    amountPaid: Number,
+    dateOfBirth: Date,
+    userRole: {
+      type: String,
+      enum: ['admin', 'user'],
+      default: 'user',
+    },
+    zone: String,
+    uniqueCode: String,
+    password: {
+      type: String,
+      unique: true,
+    },
+    paymentTransaction: String,
+    paymentTransactionReference: String,
   },
-  zone: String,
-  uniqueCode: String,
-  password: {
-    type: String,
-    unique: true,
-  },
-  paymentTransaction: String,
-  paymentTransactionReference: String,
-})
+  {
+    timestamps: true,
+  }
+)
 
 // Hash the password before saving the user
 userSchema.pre('save', async function (next) {

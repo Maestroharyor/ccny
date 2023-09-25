@@ -19,6 +19,7 @@
     "formik": "^2.4.2",
     "jsonwebtoken": "^9.0.2",
     "kutty": "^0.6.0",
+    "moment": "^2.29.4",
     "mongoose": "^7.5.2",
     "next": "^13.4.7",
     "numeral": "^2.0.6",
