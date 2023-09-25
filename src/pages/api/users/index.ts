@@ -30,8 +30,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         User.find(filter)
           .skip((page - 1) * pageSize)
           .limit(pageSize)
-          .select('-password'),
-        User.countDocuments(filter),
+          .select('-password')
+          .maxTimeMS(30000),
+        User.countDocuments(filter).maxTimeMS(30000),
       ])
 
       const totalPages = Math.ceil(totalCount / pageSize)

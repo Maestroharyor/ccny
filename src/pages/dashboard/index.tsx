@@ -38,7 +38,7 @@ const DashboardPage = () => {
     data: userData,
     isLoading: isUsersLoading,
     error: userError,
-  } = useSWR('/api/users?role=user&per_page=30', userFetcher)
+  } = useSWR('/api/users?role=user', userFetcher)
   useEffect(() => {
     if (userData) {
       setUsers(userData.data.users)
