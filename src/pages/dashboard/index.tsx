@@ -27,9 +27,13 @@ import { User } from '@/interfaces'
 const DashboardPage = () => {
   // const { users } = useSampleUsers()
   const [users, setUsers] = useState<User[]>([])
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    totalAmountPaid: 0,
+  })
 
   // const clientsListed = users.slice(0, 4)
-  const userFetcher = async (url) => {
+  const fetcher = async (url) => {
     const { data } = await axios.get(url) // Replace with your API endpoint
     return data
   }
@@ -38,12 +42,23 @@ const DashboardPage = () => {
     data: userData,
     isLoading: isUsersLoading,
     error: userError,
-  } = useSWR('/api/users?role=user', userFetcher)
+  } = useSWR('/api/users?role=user&per_page=30', fetcher)
   useEffect(() => {
     if (userData) {
       setUsers(userData.data.users)
     }
   }, [userData])
+
+  const {
+    data: statsData,
+    isLoading: isStatsLoading,
+    error: statsError,
+  } = useSWR('/api/dashboard', fetcher)
+  useEffect(() => {
+    if (statsData) {
+      setStats(statsData.data)
+    }
+  }, [statsData])
 
   return (
     <>
@@ -58,27 +73,35 @@ const DashboardPage = () => {
         ></SectionTitleLineWithButton>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6">
-          <StatsLoader />
-          <StatsLoader />
-          <CardBoxWidget
-            // trendLabel="12%"
-            // trendType="up"
-            trendColor="success"
-            icon={mdiAccountMultiple}
-            iconColor="success"
-            number={512}
-            label="Youths Registered"
-          />
-          <CardBoxWidget
-            // trendLabel="16%"
-            // trendType="down"
-            trendColor="danger"
-            icon={mdiCash}
-            iconColor="info"
-            number={7770}
-            numberPrefix="₦"
-            label="Total Payments"
-          />
+          {isStatsLoading ? (
+            <>
+              {' '}
+              <StatsLoader />
+              <StatsLoader />
+            </>
+          ) : (
+            <>
+              <CardBoxWidget
+                // trendLabel="12%"
+                // trendType="up"
+                trendColor="success"
+                icon={mdiAccountMultiple}
+                iconColor="success"
+                number={stats.totalUsers}
+                label="Youths Registered"
+              />
+              <CardBoxWidget
+                // trendLabel="16%"
+                // trendType="down"
+                trendColor="danger"
+                icon={mdiCash}
+                iconColor="info"
+                number={stats.totalAmountPaid / 100}
+                numberPrefix="₦"
+                label="Total Payments"
+              />
+            </>
+          )}
         </div>
 
         <>
