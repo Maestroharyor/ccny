@@ -42,15 +42,71 @@ const UsersTable = ({ users }: Props) => {
       <CardBoxModal
         title={`${selectedUser?.firstName} ${selectedUser?.lastName}`}
         buttonColor="info"
-        buttonLabel="Done"
+        buttonLabel="Close Youth Info"
         isActive={isModalInfoActive}
         onConfirm={handleModalAction}
-        onCancel={handleModalAction}
+        // onCancel={handleModalAction}
       >
-        <p>
-          Lorem ipsum dolor sit amet <b>adipiscing elit</b>
-        </p>
-        <p>This is sample modal</p>
+        <div className="overflow-x-auto overflow-y-auto h-[650px] lg:h-full">
+          <table className="min-w-full  bg-white text-sm">
+            <tbody className="divide-y divide-gray-300">
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">First Name</th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                  {selectedUser?.firstName}
+                </td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Last Name</th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
+                  Email Address
+                </th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
+                  Phone Number
+                </th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Gender</th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Zone</th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Portfolio</th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Amount Paid</th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Unique Code</th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
+                  Payment Transaction Number
+                </th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
+                  Payment Transaction Reference
+                </th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </CardBoxModal>
 
       {/* <CardBoxModal

@@ -10,7 +10,8 @@ import OverlayLayer from '../OverlayLayer'
 type Props = {
   title: string
   buttonColor: ColorButtonKey
-  buttonLabel: string
+  buttonLabel?: string
+  // cancelButtonLabel: string
   isActive: boolean
   children: ReactNode
   onConfirm: () => void
@@ -50,7 +51,7 @@ const CardBoxModal = ({
           )}
         </CardBoxComponentTitle>
 
-        <div className="space-y-3">{children}</div>
+        <div className="space-y-3 overflow-y-auto">{children}</div>
       </CardBox>
     </OverlayLayer>
   )

@@ -45,10 +45,10 @@ export default function CardBox({
     hasComponentLayout ? (
       children
     ) : (
-      <>
+      <div className="flex flex-col">
         <CardBoxComponentBody noPadding={hasTable}>{children}</CardBoxComponentBody>
         {footer && <CardBoxComponentFooter>{footer}</CardBoxComponentFooter>}
-      </>
+      </div>
     )
   )
 }
