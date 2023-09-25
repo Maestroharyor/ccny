@@ -11,11 +11,13 @@ type Props = {
   users: User[]
 }
 const UsersTable = ({ users }: Props) => {
+  console.log('users in table', users)
   const perPage = 5
 
   const [currentPage, setCurrentPage] = useState(0)
 
-  const usersPaginated = users.slice(perPage * currentPage, perPage * (currentPage + 1))
+  const usersPaginated =
+    users && users.length ? users.slice(perPage * currentPage, perPage * (currentPage + 1)) : []
 
   const numPages = users.length / perPage
 

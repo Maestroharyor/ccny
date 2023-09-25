@@ -28,7 +28,7 @@ const DashboardPage = () => {
   // const { users } = useSampleUsers()
   const [users, setUsers] = useState<User[]>([])
 
-  const clientsListed = users.slice(0, 4)
+  // const clientsListed = users.slice(0, 4)
   const userFetcher = async (url) => {
     const { data } = await axios.get(url) // Replace with your API endpoint
     return data
@@ -38,10 +38,10 @@ const DashboardPage = () => {
     data: userData,
     isLoading: isUsersLoading,
     error: userError,
-  } = useSWR('/api/users?role=users&per_page=30', userFetcher)
+  } = useSWR('/api/users?role=user&per_page=30', userFetcher)
   useEffect(() => {
     if (userData) {
-      setUsers(userData.data)
+      setUsers(userData.data.users)
     }
   }, [userData])
 

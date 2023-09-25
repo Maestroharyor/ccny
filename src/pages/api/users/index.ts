@@ -26,13 +26,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         ]
       }
 
-      const totalCount = await User.countDocuments(filter)
-      const totalPages = Math.ceil(totalCount / pageSize)
+      const [users, totalCount] = await Promise.all([
+        User.find(filter)
+          .skip((page - 1) * pageSize)
+          .limit(pageSize)
+          .select('-password'),
+        User.countDocuments(filter),
+      ])
 
-      const users = await User.find(filter)
-        .skip((page - 1) * pageSize)
-        .limit(pageSize)
-        .select('-password') // Exclude the password field
+      const totalPages = Math.ceil(totalCount / pageSize)
 
       res.status(200).json({
         success: true,
