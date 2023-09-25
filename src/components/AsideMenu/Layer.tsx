@@ -5,6 +5,9 @@ import AsideMenuItem from './Item'
 import AsideMenuList from './List'
 import { MenuAsideItem } from '../../interfaces'
 import { useAppSelector } from '../../stores/hooks'
+import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { logOut } from '@/stores/mainSlice'
 
 type Props = {
   menu: MenuAsideItem[]
@@ -28,6 +31,13 @@ export default function AsideMenuLayer({ menu, className = '', ...props }: Props
   const handleAsideLgCloseClick = (e: React.MouseEvent) => {
     e.preventDefault()
     props.onAsideLgCloseClick()
+  }
+
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const logoutUser = () => {
+    dispatch(logOut())
+    router.push('/login')
   }
 
   return (
@@ -57,7 +67,7 @@ export default function AsideMenuLayer({ menu, className = '', ...props }: Props
         >
           <AsideMenuList menu={menu} />
         </div>
-        <ul>
+        <ul onClick={() => logoutUser()}>
           <AsideMenuItem item={logoutItem} />
         </ul>
       </div>

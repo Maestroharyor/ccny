@@ -183,7 +183,13 @@ const DashboardPage = () => {
                 </select>
               </div>
             </div>
-            {isUsersLoading ? <TableLoader /> : <UsersTable users={users} />}
+            {isUsersLoading ? (
+              <div className="px-5">
+                <TableLoader />
+              </div>
+            ) : (
+              <UsersTable users={users} />
+            )}
           </CardBox>
         </>
       </SectionMain>
