@@ -19,6 +19,7 @@ export default function LayoutAuthenticated({ children }: Props) {
   const dispatch = useAppDispatch()
 
   const darkMode = useAppSelector((state) => state.style.darkMode)
+  const user = useAppSelector((state) => state.main)
 
   const [isAsideMobileExpanded, setIsAsideMobileExpanded] = useState(false)
   const [isAsideLgActive, setIsAsideLgActive] = useState(false)
@@ -29,6 +30,9 @@ export default function LayoutAuthenticated({ children }: Props) {
     const handleRouteChangeStart = () => {
       setIsAsideMobileExpanded(false)
       setIsAsideLgActive(false)
+      // if (!user.isLoggedIn) {
+      //   router.push('/login')
+      // }
     }
 
     router.events.on('routeChangeStart', handleRouteChangeStart)

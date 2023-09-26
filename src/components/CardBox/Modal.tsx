@@ -11,7 +11,7 @@ type Props = {
   title: string
   buttonColor: ColorButtonKey
   buttonLabel?: string
-  // cancelButtonLabel: string
+  hideCancelButton?: boolean
   isActive: boolean
   children: ReactNode
   onConfirm: () => void
@@ -22,6 +22,7 @@ const CardBoxModal = ({
   title,
   buttonColor,
   buttonLabel,
+  hideCancelButton,
   isActive,
   children,
   onConfirm,
@@ -34,14 +35,16 @@ const CardBoxModal = ({
   const footer = (
     <Buttons>
       <Button label={buttonLabel} color={buttonColor} onClick={onConfirm} />
-      {!!onCancel && <Button label="Cancel" color={buttonColor} outline onClick={onCancel} />}
+      {!!onCancel && !hideCancelButton && (
+        <Button label="Cancel" color={buttonColor} outline onClick={onCancel} />
+      )}
     </Buttons>
   )
 
   return (
     <OverlayLayer onClick={onCancel} className={onCancel ? 'cursor-pointer' : ''}>
       <CardBox
-        className={`transition-transform shadow-lg h-screen w-screen md:w-4/6 md:h-5/6 z-50`}
+        className={`transition-transform shadow-lg w-screen md:w-4/6 h-fit z-50`}
         isModal
         footer={footer}
       >

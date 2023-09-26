@@ -167,7 +167,7 @@ const LoginForm = () => {
 
         <p className="my-5 text-xs font-medium text-center text-gray-700">
           Don&apos;t remember password?{' '}
-          <Link href="/forgot-password" className="text-purple-700 hover:text-purple-900">
+          <Link href="/reset-password" className="text-purple-700 hover:text-purple-900">
             Reset Password
           </Link>
           .

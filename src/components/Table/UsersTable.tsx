@@ -7,6 +7,7 @@ import Buttons from '../Buttons'
 import CardBoxModal from '../CardBox/Modal'
 import UserAvatar from '../UserAvatar'
 import moment from 'moment'
+import NumberDynamic from '../NumberDynamic'
 
 type Props = {
   users: User[]
@@ -45,7 +46,8 @@ const UsersTable = ({ users }: Props) => {
         buttonLabel="Close Youth Info"
         isActive={isModalInfoActive}
         onConfirm={handleModalAction}
-        // onCancel={handleModalAction}
+        hideCancelButton
+        onCancel={handleModalAction}
       >
         <div className="overflow-x-auto overflow-y-auto h-[650px] lg:h-full">
           <table className="min-w-full  bg-white text-sm">
@@ -58,51 +60,67 @@ const UsersTable = ({ users }: Props) => {
               </tr>
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Last Name</th>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                  {selectedUser?.lastName}
+                </td>
               </tr>
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
                   Email Address
                 </th>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">{selectedUser?.email}</td>
               </tr>
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
                   Phone Number
                 </th>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                  {selectedUser?.phoneNumber}
+                </td>
               </tr>
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Gender</th>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                  {selectedUser?.gender}
+                </td>
               </tr>
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Zone</th>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">{selectedUser?.zone}</td>
               </tr>
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Portfolio</th>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                  {selectedUser?.portfolio}
+                </td>
               </tr>
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Amount Paid</th>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                  <NumberDynamic value={selectedUser?.amountPaid / 100} prefix={'₦'} />
+                </td>
               </tr>
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Unique Code</th>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                  #{selectedUser?.uniqueCode}
+                </td>
               </tr>
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
                   Payment Transaction Number
                 </th>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                  {selectedUser?.paymentTransaction}
+                </td>
               </tr>
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
                   Payment Transaction Reference
                 </th>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-600">$120,000</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                  {selectedUser?.paymentTransactionReference}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -122,7 +140,7 @@ const UsersTable = ({ users }: Props) => {
         </p>
         <p>This is sample modal</p>
       </CardBoxModal> */}
-      <div className="px-5">
+      <div className="px-5 overflow-x-auto">
         <table>
           <thead>
             <tr>

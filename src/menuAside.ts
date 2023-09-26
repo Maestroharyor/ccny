@@ -1,18 +1,4 @@
-import {
-  mdiAccountCircle,
-  mdiMonitor,
-  mdiGithub,
-  mdiLock,
-  mdiAlertCircle,
-  mdiSquareEditOutline,
-  mdiTable,
-  mdiViewList,
-  mdiTelevisionGuide,
-  mdiResponsive,
-  mdiPalette,
-  mdiVuejs,
-  mdiAccount,
-} from '@mdi/js'
+import { mdiMonitor, mdiCog } from '@mdi/js'
 import { MenuAsideItem } from './interfaces'
 
 const menuAside: MenuAsideItem[] = [
@@ -27,9 +13,9 @@ const menuAside: MenuAsideItem[] = [
   //   icon: mdiAccount,
   // },
   {
-    href: '/dashboard/profile',
-    label: 'Profile',
-    icon: mdiAccountCircle,
+    href: '/dashboard/settings',
+    label: 'Settings',
+    icon: mdiCog,
   },
 ]
 
