@@ -4,7 +4,7 @@ import React from 'react'
 const HomeHeroSlide1 = () => {
   return (
     <section className=" h-[630px]">
-      <div className="container flex flex-col justify-center px-6 mx-auto  md:pb-20 pt-40 md:flex-row md:justify-between max-w-[1000px] ">
+      <div className="container flex flex-col justify-center px-6 lg:px-20 mx-auto  md:pb-20 pt-40 md:flex-row md:justify-between max-w-[1000px] ">
         <div className=" flex flex-col justify-center md:p-6 text-center rounded-sm md:max-w-md xl:max-w-lg md:text-left">
           <h1
             className="text-4xl font-bold sm:text-5xl lg:text-6xl  capitalize leading-[3.5rem] headingslide1"
@@ -35,7 +35,7 @@ const HomeHeroSlide1 = () => {
             src="/images/general_overseer_2.png"
             alt=""
             // className="object-contain h-72 sm:h-80 md:h-96 xl:h-112 2xl:h-128 translate-y-[50px]"
-            className="translate-y-[10px] md:translate-y-[50px]"
+            className="translate-y-[10px] md:translate-y-[65px]"
             width={700}
             height={1000}
           />

@@ -5,7 +5,7 @@ import { MdInfo } from 'react-icons/md'
 const HomeHeroSlide3 = () => {
   return (
     <section className=" ">
-      <div className="container flex flex-col justify-center p-6 mx-auto  pb-20 pt-40 md:flex-row md:justify-between max-w-[1000px] ">
+      <div className="container flex flex-col justify-center p-6 mx-auto lg:px-20  pb-20 pt-40 md:flex-row md:justify-between max-w-[1000px] ">
         <div className=" flex flex-col justify-center p-6 text-center rounded-sm md:max-w-md xl:max-w-lg md:text-left gap-3">
           <h1 className="text-4xl font-bold sm:text-5xl lg:text-6xl  capitalize leading-[3.5rem] headingslide1">
             Gospel Music Talent Hunt
@@ -39,7 +39,7 @@ const HomeHeroSlide3 = () => {
             src="/images/talent-hunt.jpeg"
             alt=""
             // className="object-contain h-72 sm:h-80 md:h-96 xl:h-112 2xl:h-128 translate-y-[50px]"
-            className="translate-y-[-30px] sm:w-[400px] md:w-full md:translate-y-[50px]"
+            className="translate-y-[-30px] sm:w-[400px] md:w-full md:translate-y-[65px]"
             width={700}
             height={1000}
           />

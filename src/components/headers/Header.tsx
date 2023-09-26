@@ -45,7 +45,7 @@ const Header = () => {
   ]
   return (
     <div
-      className={`"ud-header fixed top-0 left-0 z-40 flex w-full items-center transition-all duration-300 ease-in-out  ${
+      className={`"ud-header fixed top-0 left-0 z-40 flex w-full items-center transition-all duration-300 ease-in-out px-5 md:px-10 lg:px-32  ${
         scrolled ? 'bg-gray-950' : 'bg-transparent'
       }`}
     >
@@ -57,7 +57,7 @@ const Header = () => {
                 src="/images/logo.png"
                 alt="logo"
                 className={`transition-all duration-300 ease-in-out  ${
-                  scrolled ? 'w-[60px]' : 'w-[80px]'
+                  scrolled ? 'w-[80px]' : 'w-[80px]'
                 }`}
               />
             </Link>
