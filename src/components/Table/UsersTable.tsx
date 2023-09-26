@@ -11,8 +11,9 @@ import NumberDynamic from '../NumberDynamic'
 
 type Props = {
   users: User[]
+  userRole: string
 }
-const UsersTable = ({ users }: Props) => {
+const UsersTable = ({ users, userRole }: Props) => {
   const perPage = 10
 
   const [currentPage, setCurrentPage] = useState(0)
@@ -43,7 +44,7 @@ const UsersTable = ({ users }: Props) => {
       <CardBoxModal
         title={`${selectedUser?.firstName} ${selectedUser?.lastName}`}
         buttonColor="info"
-        buttonLabel="Close Youth Info"
+        buttonLabel={`Close ${userRole === 'admin' ? 'Admin Details' : 'Youth Info'}`}
         isActive={isModalInfoActive}
         onConfirm={handleModalAction}
         hideCancelButton
@@ -148,9 +149,9 @@ const UsersTable = ({ users }: Props) => {
               <th>Full Name</th>
               <th>Email Address</th>
               <th>Phone Number</th>
-              <th>Portfolio</th>
+              {userRole === 'user' && <th>Portfolio</th>}
               <th>Zone</th>
-              <th>Date of Birth</th>
+              {userRole === 'user' && <th>Date of Birth</th>}
               <th>Date Registered</th>
               <th />
             </tr>
@@ -166,11 +167,13 @@ const UsersTable = ({ users }: Props) => {
                 </td>
                 <td data-label="Email Address">{user.email}</td>
                 <td data-label="Phone Number">{user.phoneNumber}</td>
-                <td data-label="Portfolio">{user.portfolio}</td>
+                {userRole === 'user' && <td data-label="Portfolio">{user.portfolio}</td>}
                 <td data-label="Zone">{user.zone}</td>
-                <td data-label="Date of Birth">
-                  {moment(user.dateOfBirth).format('D, MMM, YYYY')}
-                </td>
+                {userRole === 'user' && (
+                  <td data-label="Date of Birth">
+                    {moment(user.dateOfBirth).format('D, MMM, YYYY')}
+                  </td>
+                )}
 
                 <td data-label="Created" className="lg:w-1 whitespace-nowrap">
                   <small className="text-gray-500 dark:text-slate-400">

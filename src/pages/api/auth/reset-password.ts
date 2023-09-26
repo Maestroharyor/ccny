@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await passwordResetCode.save()
 
       // Send the reset code email to the user
-      await sendEmail(email, 'Password Reset Code', `Your password reset code is: ${resetCode}`)
+      // await sendEmail(email, 'Password Reset Code', `Your password reset code is: ${resetCode}`)
 
       res.status(200).json({
         success: true,

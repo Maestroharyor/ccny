@@ -7,9 +7,9 @@ import Icon from '../components/Icon'
 import NavBar from '../components/NavBar'
 import NavBarItemPlain from '../components/NavBar/Item/Plain'
 import AsideMenu from '../components/AsideMenu'
-import { setUser } from '../stores/mainSlice'
 import { useAppDispatch, useAppSelector } from '../stores/hooks'
 import { useRouter } from 'next/router'
+import { logOut, setUser } from '@/stores/mainSlice'
 
 type Props = {
   children: ReactNode
@@ -43,6 +43,15 @@ export default function LayoutAuthenticated({ children }: Props) {
       router.events.off('routeChangeStart', handleRouteChangeStart)
     }
   }, [router.events, dispatch])
+
+  useEffect(() => {
+    if (!user.isLoggedIn || user.userRole !== 'admin') {
+      if (user.userRole !== 'admin') {
+        dispatch(logOut())
+      }
+      router.push('/login')
+    }
+  }, [])
 
   const layoutAsidePadding = 'xl:pl-60'
 

@@ -13,6 +13,7 @@ interface MainState {
   paymentTransactionReference: string
   phoneNumber: string
   portfolio: string
+  userRole: string
   uniqueCode: string
   zone: string
   token: string
@@ -33,6 +34,7 @@ const initialState: MainState = {
   phoneNumber: '',
   portfolio: '',
   uniqueCode: '',
+  userRole: '',
   zone: '',
   token: '',
   gender: '',
@@ -57,6 +59,7 @@ export const mainSlice = createSlice({
       state.portfolio = action.payload.user.portfolio
       state.uniqueCode = action.payload.user.uniqueCode
       state.zone = action.payload.user.zone
+      state.userRole = action.payload.user.userRole
       state.token = action.payload.token
       state.gender = action.payload.user.gender
       state.isLoggedIn = true
@@ -75,6 +78,7 @@ export const mainSlice = createSlice({
       state.portfolio = ''
       state.uniqueCode = ''
       state.zone = ''
+      state.userRole = ''
       state.token = ''
       state.gender = ''
       state.isLoggedIn = false

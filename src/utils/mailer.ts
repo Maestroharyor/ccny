@@ -1,7 +1,14 @@
 // utils/mailer.ts
 import nodemailer from 'nodemailer'
 
-export async function sendEmail(to: string, subject: string, text: string) {
+interface EmailOptions {
+  to: string
+  subject: string
+  text?: string
+  html?: string
+}
+
+export async function sendEmail({ to, subject, text, html }: EmailOptions) {
   try {
     // Create a transport for sending email (update with your email settings)
     const transporter = nodemailer.createTransport({
@@ -13,13 +20,21 @@ export async function sendEmail(to: string, subject: string, text: string) {
       },
     })
 
-    // Send the email
-    await transporter.sendMail({
+    // Determine whether to send an HTML email or plain text email
+    const mailOptions = {
       from: process.env.EMAIL_ADDRESS,
       to,
       subject,
-      text,
-    })
+    } as any // Use 'any' type to allow adding either 'text' or 'html' property
+
+    if (html) {
+      mailOptions.html = html // Send HTML email if HTML content is provided
+    } else {
+      mailOptions.text = text // Send plain text email if HTML content is not provided
+    }
+
+    // Send the email
+    await transporter.sendMail(mailOptions)
 
     console.log(`Email sent to ${to}`)
   } catch (error) {

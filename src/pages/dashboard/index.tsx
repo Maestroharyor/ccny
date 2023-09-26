@@ -188,7 +188,7 @@ const DashboardPage = () => {
                 <TableLoader />
               </div>
             ) : (
-              <UsersTable users={users} />
+              <UsersTable users={users} userRole={userRole} />
             )}
           </CardBox>
         </>

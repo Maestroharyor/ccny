@@ -4,6 +4,11 @@ import connectDB from '@/db'
 import User from '@/models/User'
 import jwt from 'jsonwebtoken'
 import { generateRandomCode } from '@/utils'
+import { sendEmail } from '@/utils/mailer'
+import {
+  generateRegistrationSuccessHTMLToAdmin,
+  generateRegistrationSuccessHTMLToUser,
+} from '@/utils/emails'
 
 connectDB()
 
@@ -67,7 +72,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       })
 
       await user.save()
-      console.log(user)
+
+      await Promise.all([
+        sendEmail({
+          to: user.email,
+          subject: 'Registration Successful',
+          html: generateRegistrationSuccessHTMLToUser(user, 'Registration Successful'),
+        }),
+        sendEmail({
+          to: process.env.ADMIN_EMAIL_NOTIFICATION,
+          subject: 'New Registration Alert',
+          html: generateRegistrationSuccessHTMLToAdmin(user, 'New Registration Alert'),
+        }),
+      ])
       // Generate a token for authentication
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET) // Replace with your secret key
 

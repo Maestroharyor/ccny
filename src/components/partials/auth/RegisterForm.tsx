@@ -68,11 +68,11 @@ const RegisterForm = () => {
       amountPaid: amountToPay,
     }))
     setHasPaid(true)
-    setForm((prevValue) => ({
-      ...prevValue,
+    setForm({
+      ...form,
       paymentTransactionReference: reference.reference,
       paymentTransaction: reference.transaction,
-    }))
+    })
     registerUser()
   }
 
@@ -97,7 +97,7 @@ const RegisterForm = () => {
   const registerUser = async () => {
     setIsLoading(true)
     try {
-      const { data } = await axios.post('/api/auth/register', form)
+      const { data } = await axios.post('/api/auth/register', { ...form, amountPaid: amountToPay })
       dispatch(setUser(data.data))
       message.success('Registration Successful')
       if (data?.data?.user?.userRole === 'user') {

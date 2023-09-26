@@ -32,9 +32,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   const description = 'CCNY Registration Website'
 
-  const url = 'https://justboil.github.io/admin-one-react-tailwind/'
+  const url = ''
 
-  const image = `https://static.justboil.me/templates/one/repo-tailwind-react.png`
+  const image = ``
 
   const imageWidth = '1920'
 
