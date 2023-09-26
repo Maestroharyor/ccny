@@ -1,9 +1,12 @@
 // pages/api/reset-password.ts
+import connectDB from '@/db'
 import PasswordResetCode from '@/models/PasswordResetCode'
 import { generateRandomCode } from '@/utils'
+import { generatePasswordResetHTML } from '@/utils/emails'
 import { sendEmail } from '@/utils/mailer'
 import { NextApiRequest, NextApiResponse } from 'next'
 
+connectDB()
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
@@ -17,6 +20,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
       }
 
+      // Check if there's an existing reset code for the same email
+      const existingResetCode = await PasswordResetCode.findOne({ email })
+
       // Generate a unique reset code (use a library like crypto)
       const resetCode = generateRandomCode(6)
 
@@ -24,22 +30,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const expirationDate = new Date()
       expirationDate.setHours(expirationDate.getHours() + 1)
 
-      // Save the reset code in the database
-      const passwordResetCode = new PasswordResetCode({
-        email,
-        code: resetCode,
-        expiresAt: expirationDate,
-      })
-      await passwordResetCode.save()
+      if (existingResetCode) {
+        // If there's an existing reset code, update it
+        existingResetCode.code = resetCode
+        existingResetCode.expiresAt = expirationDate
+        await existingResetCode.save()
+      } else {
+        // If no existing reset code, create a new one
+        const passwordResetCode = new PasswordResetCode({
+          email,
+          code: resetCode,
+          expiresAt: expirationDate,
+        })
+        await passwordResetCode.save()
+      }
 
       // Send the reset code email to the user
-      // await sendEmail(email, 'Password Reset Code', `Your password reset code is: ${resetCode}`)
+      await sendEmail({
+        to: email,
+        subject: 'Password Reset Code',
+        html: generatePasswordResetHTML(email, resetCode),
+      })
 
       res.status(200).json({
         success: true,
         message: 'Password reset code sent successfully.',
       })
     } catch (error) {
+      console.log(error)
       res.status(500).json({
         success: false,
         message: 'Failed to send reset code.',

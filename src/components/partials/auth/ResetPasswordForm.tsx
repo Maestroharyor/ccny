@@ -14,14 +14,12 @@ const ResetPasswordForm = () => {
   const dispatch = useDispatch()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const [loginMode, setLoginMode] = useState('email')
+  const [isCodeSent, setIsCodeSent] = useState(false)
+  const [email, setEmail] = useState('')
   const [form, setForm] = useState({
-    email: '',
-    phoneNumber: '',
+    code: '',
     password: '',
   })
-
-  const loginModes = ['email', 'password']
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
@@ -32,31 +30,44 @@ const ResetPasswordForm = () => {
     })
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSendCodeSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    loginUser()
+    requestResetCode()
   }
 
-  const loginUser = async () => {
+  const passwordReset = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    resetPasswordWithCode()
+  }
+
+  const requestResetCode = async () => {
     setIsLoading(true)
-    const formData: { password: string; email?: string; phoneNumber?: string } = {
-      password: form.password,
-    }
-    if (form.email.length) {
-      formData.email = form.email
-    }
-    if (form.phoneNumber.length) {
-      formData.phoneNumber = form.phoneNumber
-    }
+
     try {
-      const { data } = await axios.post('/api/auth/login', formData)
-      dispatch(setUser(data.data))
-      message.success('Login Successful')
-      if (data?.data?.user?.userRole === 'user') {
-        router.push('/account')
-      } else {
-        router.push('/dashboard')
-      }
+      const { data } = await axios.post('/api/auth/reset-password', { email })
+      console.log(data)
+      message.success('Reset Code Sent')
+      setIsCodeSent(true)
+    } catch (error) {
+      message.error(
+        error?.response?.data?.message ||
+          error?.message ||
+          error?.response?.message ||
+          'An error occured'
+      )
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const resetPasswordWithCode = async () => {
+    setIsLoading(true)
+
+    try {
+      const { data } = await axios.post('/api/auth/reset-password-confirm', { ...form, email })
+      console.log(data)
+      message.success('Password Reset Successfully')
+      router.push('/login')
     } catch (error) {
       message.error(
         error?.response?.data?.message ||
@@ -93,30 +104,66 @@ const ResetPasswordForm = () => {
             Register
           </Link>
         </p>
-        <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
-          <label className="block">
-            <span className="block mb-1 text-xs font-medium text-gray-700">Your Email</span>
-            <input
-              className="form-input"
-              type="email"
-              placeholder="Ex. james@bond.com"
-              inputMode="email"
-              name="email"
-              required
-              onChange={handleChange}
-              value={form.email}
-            />
-          </label>
+        {isCodeSent ? (
+          <form className="mt-8 space-y-4" onSubmit={passwordReset}>
+            <label className="block">
+              <span className="block mb-1 text-xs font-medium text-gray-700">Reset Code</span>
+              <input
+                className="form-input"
+                type="text"
+                name="code"
+                required
+                onChange={handleChange}
+                value={form.code}
+              />
+            </label>
+            <label className="block">
+              <span className="block mb-1 text-xs font-medium text-gray-700">New Password</span>
+              <input
+                className="form-input"
+                type="password"
+                name="password"
+                required
+                onChange={handleChange}
+                value={form.password}
+              />
+            </label>
 
-          <button
-            type="submit"
-            className="w-full btn btn-primary btn-lg flex justify-center items-center gap-2"
-            disabled={isLoading}
-          >
-            {isLoading && <FaCircleNotch className="animate-spin" />}
-            <span>{isLoading ? 'Resetting' : 'Reset Password'}</span>
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="w-full btn btn-primary btn-lg flex justify-center items-center gap-2"
+              disabled={isLoading}
+            >
+              {isLoading && <FaCircleNotch className="animate-spin" />}
+              <span>{isLoading ? 'Resetting' : 'Reset Password'}</span>
+            </button>
+          </form>
+        ) : (
+          <form className="mt-8 space-y-4" onSubmit={handleSendCodeSubmit}>
+            <label className="block">
+              <span className="block mb-1 text-xs font-medium text-gray-700">Your Email</span>
+              <input
+                className="form-input"
+                type="email"
+                placeholder="Ex. james@bond.com"
+                inputMode="email"
+                name="email"
+                required
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+              />
+            </label>
+
+            <button
+              type="submit"
+              className="w-full btn btn-primary btn-lg flex justify-center items-center gap-2"
+              disabled={isLoading}
+            >
+              {isLoading && <FaCircleNotch className="animate-spin" />}
+              <span>{isLoading ? 'Resetting' : 'Reset Password'}</span>
+            </button>
+          </form>
+        )}
 
         <p className="my-5 text-xs font-medium text-center text-gray-700">
           Remembered password?{' '}

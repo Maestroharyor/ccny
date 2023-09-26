@@ -1,13 +1,20 @@
 // pages/api/reset-password-confirm.ts
+import connectDB from '@/db'
 import PasswordResetCode from '@/models/PasswordResetCode'
 import User from '@/models/User'
+import { generatePasswordResetSuccessHTML } from '@/utils/emails'
+import { sendEmail } from '@/utils/mailer'
 import { NextApiRequest, NextApiResponse } from 'next'
 
+connectDB()
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      const { email, code, newPassword } = req.body
+      const { email, code, password } = req.body
 
+      console.log(code)
+      console.log(email)
+      console.log(password)
       // Find the reset code in the database
       const resetCodeDoc = await PasswordResetCode.findOne({
         email,
@@ -23,19 +30,37 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       // Update the user's password
-      const user = await User.findOneAndUpdate({ email }, { password: newPassword }, { new: true })
+      const user = await User.findOne({ email })
 
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: 'User not found.',
+        })
+      }
+
+      user.password = password // Assign the new password
+      await user.save() // Save the user, which will trigger the pre-save middleware
+
+      console.log(user)
       // Remove the reset code from the database
       await resetCodeDoc.deleteOne({
         email,
       })
 
+      await sendEmail({
+        to: user.email,
+        subject: 'Password Reset Successfully',
+        html: generatePasswordResetSuccessHTML(`http://www.cccginym.org/login`),
+      })
+
       res.status(200).json({
         success: true,
         message: 'Password reset successfully.',
-        user,
+        // user,
       })
     } catch (error) {
+      console.log(error)
       res.status(500).json({
         success: false,
         message: 'Failed to reset password.',
