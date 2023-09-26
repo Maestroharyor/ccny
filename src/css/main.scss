@@ -7,10 +7,97 @@
 @import '_scrollbars.css';
 @import '_table.css';
 
+// Define custom media queries using Tailwind breakpoints
+// Small (sm): 640px
+$mql-sm: 'screen and (min-width: 640px)';
+
+// Medium (md): 768px
+$mql-md: 'screen and (min-width: 768px)';
+
+// Large (lg): 1024px
+$mql-lg: 'screen and (min-width: 1024px)';
+
+// Extra Large (xl): 1280px
+$mql-xl: 'screen and (min-width: 1280px)';
+
+// Extra Extra Large (2xl): 1536px
+$mql-2xl: 'screen and (min-width: 1536px)';
+
+// Generate media query mixins based on Tailwind breakpoints
+@mixin sm {
+  @media #{$mql-sm} {
+    @content;
+  }
+}
+
+@mixin md {
+  @media #{$mql-md} {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media #{$mql-lg} {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media #{$mql-xl} {
+    @content;
+  }
+}
+
+// @mixin 2xl {
+//   @media #{$mql-2xl} {
+//     @content;
+//   }
+// }
+
 html,
 body {
   font-family: 'koHo', sans-serif;
   scroll-behavior: smooth;
+}
+
+// Example usage of custom media queries
+.slick-track {
+  height: 850px;
+
+  @include sm {
+    // width: 50%;
+  }
+
+  @include md {
+    // width: 75%;
+    height: 630px;
+  }
+
+  @include lg {
+    // width: 90%;
+  }
+
+  @include xl {
+    // width: 100%;
+  }
+}
+.headingslide1 {
+  @include sm {
+    // width: 50%;
+  }
+
+  @include md {
+    // width: 75%;
+    line-height: 4.5rem !important;
+  }
+
+  @include lg {
+    // width: 90%;
+  }
+
+  @include xl {
+    // width: 100%;
+  }
 }
 
 .slick-arrow {

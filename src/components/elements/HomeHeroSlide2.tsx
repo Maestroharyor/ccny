@@ -4,7 +4,7 @@ import React from 'react'
 
 const HomeHeroSlide2 = () => {
   return (
-    // <section className="relative overflow-hidden bg-transparent   sm:py-12 lg:pb-20 lg:pt-40  max-w-[1000px]  mx-auto  flex items-center justify-center h-[630px] ">
+    // <section className="relative overflow-hidden bg-transparent   sm:py-12 md:pb-20 md:pt-40  max-w-[1000px]  mx-auto  flex items-center justify-center h-[630px] ">
     //   <div className="">
     //     <div className="-mx-4 flex flex-wrap items-center">
     //       <div className="w-full px-4">
@@ -34,15 +34,12 @@ const HomeHeroSlide2 = () => {
     //   </div>
     // </section>
     <section className=" ">
-      <div className="container flex flex-col justify-center p-6 mx-auto  pb-20 pt-40 lg:flex-row lg:justify-between max-w-[1000px] ">
-        <div className=" flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left gap-3">
-          <h1
-            className="text-3xl font-bold sm:text-5xl leading-[3rem] capitalize"
-            style={{ lineHeight: '4rem' }}
-          >
+      <div className="container flex flex-col justify-center p-6 mx-auto  pb-20 pt-40 md:flex-row md:justify-between max-w-[1000px] ">
+        <div className=" flex flex-col justify-center p-6 text-center rounded-sm md:max-w-md xl:max-w-lg md:text-left gap-3">
+          <h1 className="text-4xl font-bold sm:text-5xl lg:text-6xl  capitalize leading-[3.5rem] headingslide1">
             Welcome To National Youth & Students Convention
           </h1>
-          <div className="flex justify-center lg:justify-start py-3">
+          <div className="flex justify-center md:justify-start py-3">
             <Link
               href="/register"
               className="px-5 py-3 rounded border-white border flex items-center gap-3 w-fit hover:border-yellow-500 transition-all duration-300 ease-in-out hover:text-yellow-500"
@@ -57,7 +54,7 @@ const HomeHeroSlide2 = () => {
             </Link>
           </div>
 
-          {/* <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
+          {/* <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 md:justify-start">
               <a
                 rel="noopener noreferrer"
                 href="#"
@@ -74,12 +71,12 @@ const HomeHeroSlide2 = () => {
               </a>
             </div> */}
         </div>
-        <div className="flex-1 flex items-center justify-center p-6 mt-8 lg:mt-0 h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128">
+        <div className="flex-1 flex items-center justify-center p-6 mt-8 md:mt-0 h-72 sm:h-80 md:h-96 xl:h-112 2xl:h-128">
           <Image
             src="/images/DP_Banner_Royal_Diadem.jpg"
             alt=""
-            // className="object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128 translate-y-[50px]"
-            className="lg:translate-y-[50px]"
+            // className="object-contain h-72 sm:h-80 md:h-96 xl:h-112 2xl:h-128 translate-y-[50px]"
+            className="translate-y-[-30px] sm:w-[400px] md:w-full md:translate-y-[50px]"
             width={700}
             height={1000}
           />
