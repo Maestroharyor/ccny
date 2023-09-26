@@ -57,7 +57,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         message: 'Password reset code sent successfully.',
       })
     } catch (error) {
-      console.log(error)
       res.status(500).json({
         success: false,
         message: 'Failed to send reset code.',

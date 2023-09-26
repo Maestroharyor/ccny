@@ -44,8 +44,7 @@ const ResetPasswordForm = () => {
     setIsLoading(true)
 
     try {
-      const { data } = await axios.post('/api/auth/reset-password', { email })
-      console.log(data)
+      await axios.post('/api/auth/reset-password', { email })
       message.success('Reset Code Sent')
       setIsCodeSent(true)
     } catch (error) {
@@ -64,8 +63,7 @@ const ResetPasswordForm = () => {
     setIsLoading(true)
 
     try {
-      const { data } = await axios.post('/api/auth/reset-password-confirm', { ...form, email })
-      console.log(data)
+      await axios.post('/api/auth/reset-password-confirm', { ...form, email })
       message.success('Password Reset Successfully')
       router.push('/login')
     } catch (error) {

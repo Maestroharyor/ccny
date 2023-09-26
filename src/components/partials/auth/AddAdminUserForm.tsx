@@ -55,7 +55,6 @@ const AddAdminUserForm = ({
   const registerUser = async () => {
     setIsLoading(true)
     try {
-      console.log(form)
       const { data } = await axios.post('/api/auth/register', form)
       dispatch(setUser(data.data))
       message.success('Admin added Successfully')

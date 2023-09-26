@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux'
 
 const AccountPage = () => {
   const user = useSelector((state: RootState) => state.main)
-  console.log(user)
   return (
     <main className="flex h-[calc(100vh-150px)] w-screen items-center justify-center bg-gray-100 p-10">
       <div className="relative flex flex-col sm:flex-row min-h-[300px] w-full max-w-[700px] rounded bg-gray-300 px-5 py-5 shadow">

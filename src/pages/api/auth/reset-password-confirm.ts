@@ -11,10 +11,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'POST') {
     try {
       const { email, code, password } = req.body
-
-      console.log(code)
-      console.log(email)
-      console.log(password)
       // Find the reset code in the database
       const resetCodeDoc = await PasswordResetCode.findOne({
         email,
@@ -42,7 +38,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       user.password = password // Assign the new password
       await user.save() // Save the user, which will trigger the pre-save middleware
 
-      console.log(user)
       // Remove the reset code from the database
       await resetCodeDoc.deleteOne({
         email,
@@ -60,7 +55,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // user,
       })
     } catch (error) {
-      console.log(error)
       res.status(500).json({
         success: false,
         message: 'Failed to reset password.',

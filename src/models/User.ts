@@ -50,9 +50,8 @@ const userSchema = new mongoose.Schema<IUser>(
 
 // Hash the password before saving the user
 userSchema.pre('save', async function (next) {
-  console.log('Pre works')
+
   if (this.isModified('password')) {
-    console.log('MOdified')
     try {
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(this.password, salt)
@@ -62,7 +61,6 @@ userSchema.pre('save', async function (next) {
       next(error)
     }
   } else {
-    console.log('Not modified')
     next()
   }
 })
