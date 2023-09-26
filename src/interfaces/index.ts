@@ -16,6 +16,7 @@ export type User = {
   portfolio: string
   uniqueCode: string
   userRole: string
+  paymentMethod:string
   gender: string
   zone: string
 }

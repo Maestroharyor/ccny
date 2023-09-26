@@ -96,34 +96,52 @@ const UsersTable = ({ users, userRole }: Props) => {
                   {selectedUser?.portfolio}
                 </td>
               </tr>
-              <tr>
-                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Amount Paid</th>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
-                  <NumberDynamic value={selectedUser?.amountPaid / 100} prefix={'₦'} />
-                </td>
-              </tr>
+
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Unique Code</th>
                 <td className="whitespace-nowrap px-4 py-2 text-gray-600">
                   #{selectedUser?.uniqueCode}
                 </td>
               </tr>
-              <tr>
-                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
-                  Payment Transaction Number
-                </th>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
-                  {selectedUser?.paymentTransaction}
-                </td>
-              </tr>
-              <tr>
-                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
-                  Payment Transaction Reference
-                </th>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
-                  {selectedUser?.paymentTransactionReference}
-                </td>
-              </tr>
+              {selectedUser.paymentMethod && (
+                <tr>
+                  <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
+                    Payment Method
+                  </th>
+                  <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                    {capitalizeFirstCharacter(selectedUser?.paymentMethod)}
+                  </td>
+                </tr>
+              )}
+              {selectedUser && selectedUser?.paymentMethod.toLowerCase() === 'online' && (
+                <>
+                  {' '}
+                  <tr>
+                    <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
+                      Amount Paid
+                    </th>
+                    <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                      <NumberDynamic value={selectedUser?.amountPaid / 100} prefix={'₦'} />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
+                      Payment Transaction Number
+                    </th>
+                    <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                      {selectedUser?.paymentTransaction}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
+                      Payment Transaction Reference
+                    </th>
+                    <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                      {selectedUser?.paymentTransactionReference}
+                    </td>
+                  </tr>
+                </>
+              )}
             </tbody>
           </table>
         </div>

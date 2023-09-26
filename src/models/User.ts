@@ -15,6 +15,7 @@ interface IUser extends Document {
   userRole: string
   uniqueCode: string
   password: string
+  paymentMethod: string
   paymentTransaction: string
   paymentTransactionReference: string
 }
@@ -40,6 +41,7 @@ const userSchema = new mongoose.Schema<IUser>(
       type: String,
       unique: true,
     },
+    paymentMethod: { type: String, lowercase: true },
     paymentTransaction: String,
     paymentTransactionReference: String,
   },
@@ -50,7 +52,6 @@ const userSchema = new mongoose.Schema<IUser>(
 
 // Hash the password before saving the user
 userSchema.pre('save', async function (next) {
-
   if (this.isModified('password')) {
     try {
       const salt = await bcrypt.genSalt(10)
