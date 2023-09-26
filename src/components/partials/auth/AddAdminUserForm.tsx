@@ -1,33 +1,38 @@
-import React, { useState } from 'react'
-import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
 import { DatePicker, DatePickerProps, message } from 'antd'
 import axios from 'axios'
 import { FaCircleNotch } from 'react-icons/fa'
-import { usePaystackPayment } from 'react-paystack'
 import { useRouter } from 'next/router'
 import { setUser } from '@/stores/mainSlice'
 import { useDispatch } from 'react-redux'
+import { User } from '@/interfaces'
 
-const RegisterForm = () => {
-  const router = useRouter()
+type Props = {
+  isUserAddLoading: boolean
+  setIsUserAddLoading: React.Dispatch<React.SetStateAction<boolean>>
+  isAddUserModalActive: boolean
+  // closeModal: () => void;
+}
+const AddAdminUserForm = ({
+  isUserAddLoading,
+  setIsUserAddLoading,
+  isAddUserModalActive,
+}: Props) => {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
-  const amountToPay = 2000000
+  const [hasCreated, setHasCreated] = useState(false)
+  const [newUser, setNewUser] = useState<User | null>(null)
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phoneNumber: '',
-    portfolio: '',
-    amountPaid: 0,
-    dateOfBirth: '',
     zone: '',
+    amountPaid: 0,
     gender: '',
     password: '',
-    paymentTransaction: '',
-    paymentTransactionReference: '',
+    userRole: 'admin',
   })
-  const [hasPaid, setHasPaid] = useState(false)
 
   const handleChange = (
     e:
@@ -41,70 +46,20 @@ const RegisterForm = () => {
     })
   }
 
-  const onDateChange: DatePickerProps['onChange'] = (date, dateString) => {
-    setForm({
-      ...form,
-      dateOfBirth: dateString,
-    })
-  }
-
-  const config = {
-    reference: new Date().getTime().toString(),
-    email: form.email,
-    amount: amountToPay, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
-  }
-  const initializePayment = usePaystackPayment(config)
-
-  // you can call this function anything
-  const onSuccess = (reference) => {
-    // Implementation for whatever you want to do with reference and after success call.
-    message.success('Payment Successful')
-    // setTimeout(() => {
-    message.loading('Proceeding with your registration')
-    // }, 1000)
-    setForm((prevValue) => ({
-      ...prevValue,
-      amountPaid: amountToPay,
-    }))
-    setHasPaid(true)
-    setForm((prevValue) => ({
-      ...prevValue,
-      paymentTransactionReference: reference.reference,
-      paymentTransaction: reference.transaction,
-    }))
-    registerUser()
-  }
-
-  // you can call this function anything
-  const onClose = () => {
-    // implementation for  whatever you want to do when the Paystack dialog closed.
-    message.error('Payment Failed')
-    setTimeout(() => {
-      message.error('Unable to proceeed with your registration')
-    }, 1000)
-  }
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (hasPaid) {
-      registerUser()
-    } else {
-      initializePayment(onSuccess as () => void, onClose)
-    }
+    registerUser()
   }
 
   const registerUser = async () => {
     setIsLoading(true)
     try {
+      console.log(form)
       const { data } = await axios.post('/api/auth/register', form)
       dispatch(setUser(data.data))
-      message.success('Registration Successful')
-      if (data?.data?.user?.userRole === 'user') {
-        router.push('/account')
-      } else {
-        router.push('/dashboard')
-      }
+      message.success('Admin added Successfully')
+      setHasCreated(true)
+      setNewUser(data.data.user)
     } catch (error) {
       message.error(
         error?.response?.data?.message ||
@@ -116,28 +71,63 @@ const RegisterForm = () => {
       setIsLoading(false)
     }
   }
-  return (
-    <section className="px-4 pb-24 mx-auto  bg-gray-100 min-h-screen">
-      <header className="flex items-center justify-center py-5 mb-5 border-b border-gray-200">
-        <div className="w-full flex items-center justify-center">
-          <Link href="/" className={`"navbar-logo block w-fit `}>
-            <img
-              src="/images/logo.png"
-              alt="logo"
-              className={`transition-all duration-300 ease-in-out  w-[60px]`}
-            />
-          </Link>
-        </div>
-      </header>
-      <div className="w-full py-6 mx-auto md:w-3/5 lg:w-2/5">
-        <h1 className="mb-1 text-xl font-medium text-center text-gray-800 md:text-3xl">Register</h1>
-        <p className="mb-2 text-sm font-normal text-center text-gray-700 md:text-base flex gap-3 items-center justify-center">
-          <span>Already have an account?</span>
 
-          <Link href="/login" className="text-purple-700 hover:text-purple-900">
-            Login
-          </Link>
-        </p>
+  useEffect(() => {
+    setNewUser(null)
+    setHasCreated(false)
+    setForm({
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+      zone: '',
+      amountPaid: 0,
+      gender: '',
+      password: '',
+      userRole: 'admin',
+    })
+  }, [isAddUserModalActive])
+  return (
+    <section>
+      {hasCreated ? (
+        <div>
+          <p className="text-2xl font-bold">Admin Details</p>
+          <table className="min-w-full  bg-white text-sm">
+            <tbody className="divide-y divide-gray-300">
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">First Name</th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">{newUser?.firstName}</td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Last Name</th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">{newUser?.lastName}</td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
+                  Email Address
+                </th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">{newUser?.email}</td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
+                  Phone Number
+                </th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                  {newUser?.phoneNumber}
+                </td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Gender</th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">{newUser?.gender}</td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Zone</th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">{newUser?.zone}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ) : (
         <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
           <div className="flex flex-col md:flex-row gap-4">
             <label className="block flex-1">
@@ -196,17 +186,6 @@ const RegisterForm = () => {
               onChange={handleChange}
             />
           </label>
-          <label className="block">
-            <span className="block mb-1 text-xs font-medium text-gray-700">Portfolio</span>
-            <textarea
-              name="portfolio"
-              id=""
-              cols={30}
-              rows={2}
-              className="resize-none w-full"
-              onChange={handleChange}
-            ></textarea>
-          </label>
           <label className="block text-sm mb-1" htmlFor="gender">
             Gender
           </label>
@@ -216,17 +195,12 @@ const RegisterForm = () => {
             name="gender"
             placeholder="Select gender"
             onChange={handleChange}
-            required
           >
             <option value={''}>Select Gender</option>
             <option value={'male'}>Male</option>
             <option value={'female'}>Female</option>
           </select>
 
-          <label className="block">
-            <span className="block mb-1 text-xs font-medium text-gray-700">Date of Birth</span>
-            <DatePicker onChange={onDateChange} className="w-full" size="large" />
-          </label>
           <label className="block">
             <span className="block mb-1 text-xs font-medium text-gray-700">Create a password</span>
             <input
@@ -245,24 +219,12 @@ const RegisterForm = () => {
             disabled={isLoading}
           >
             {isLoading && <FaCircleNotch className="animate-spin" />}
-            <span>{isLoading ? 'Registering' : 'Register'}</span>
+            <span>{isLoading ? 'Adding New Admin' : 'Add Admin'}</span>
           </button>
         </form>
-
-        {/* <p className="my-5 text-xs font-medium text-center text-gray-700">
-          By clicking "Sign Up" you agree to our
-          <a href="#" className="text-purple-700 hover:text-purple-900">
-            Terms of Service
-          </a>
-          and
-          <a href="#" className="text-purple-700 hover:text-purple-900">
-            Privacy Policy
-          </a>
-          .
-        </p> */}
-      </div>
+      )}
     </section>
   )
 }
 
-export default RegisterForm
+export default AddAdminUserForm

@@ -25,6 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         paymentTransactionReference,
         userRole,
       } = req.body
+      console.log({ gender })
 
       if (!email && !phoneNumber) {
         return res.status(400).json({
@@ -66,7 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       })
 
       await user.save()
-
+      console.log(user)
       // Generate a token for authentication
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET) // Replace with your secret key
 

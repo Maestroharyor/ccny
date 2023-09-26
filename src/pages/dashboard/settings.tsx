@@ -21,6 +21,7 @@ import axios from 'axios'
 import { logOut, setUser } from '@/stores/mainSlice'
 import { useRouter } from 'next/router'
 import CardBoxModal from '@/components/CardBox/Modal'
+import AddAdminUserForm from '@/components/partials/auth/AddAdminUserForm'
 
 const SettingsPage = () => {
   const user = useAppSelector((state: RootState) => state.main)
@@ -63,7 +64,12 @@ const SettingsPage = () => {
 
   const content = (
     <div className="flex flex-col md:flex-row gap-3">
-      <Button color="info" label="Add New Admin" outline />
+      <Button
+        color="info"
+        label="Add New Admin"
+        outline
+        onClick={() => setIsAddUserModalActive(true)}
+      />
       <Button color="info" label="Reset Password" outline onClick={logoutUserToReset} />
     </div>
   )
@@ -79,17 +85,19 @@ const SettingsPage = () => {
       </Head>
 
       <CardBoxModal
-        title="Please confirm"
-        buttonColor="danger"
-        buttonLabel="Confirm"
+        title="Add New Admin"
+        hideCancelButton
+        // buttonColor="danger"
+        // buttonLabel="Confirm"
         isActive={isAddUserModalActive}
-        onConfirm={handleModalAction}
+        // onConfirm={handleModalAction}
         onCancel={handleModalAction}
       >
-        <p>
-          Lorem ipsum dolor sit amet <b>adipiscing elit</b>
-        </p>
-        <p>This is sample modal</p>
+        <AddAdminUserForm
+          isUserAddLoading={isUserAddLoading}
+          setIsUserAddLoading={setIsUserAddLoading}
+          isAddUserModalActive={isAddUserModalActive}
+        />
       </CardBoxModal>
 
       <SectionMain>

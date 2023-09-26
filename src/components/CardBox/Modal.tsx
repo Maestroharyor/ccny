@@ -9,12 +9,12 @@ import OverlayLayer from '../OverlayLayer'
 
 type Props = {
   title: string
-  buttonColor: ColorButtonKey
+  buttonColor?: ColorButtonKey
   buttonLabel?: string
   hideCancelButton?: boolean
   isActive: boolean
   children: ReactNode
-  onConfirm: () => void
+  onConfirm?: () => void
   onCancel?: () => void
 }
 

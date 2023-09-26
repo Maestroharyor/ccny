@@ -11,6 +11,7 @@ interface IUser extends Document {
   amountPaid: number
   dateOfBirth: Date
   zone: string
+  gender: string
   userRole: string
   uniqueCode: string
   password: string
@@ -33,6 +34,7 @@ const userSchema = new mongoose.Schema<IUser>(
       default: 'user',
     },
     zone: String,
+    gender: String,
     uniqueCode: String,
     password: {
       type: String,
