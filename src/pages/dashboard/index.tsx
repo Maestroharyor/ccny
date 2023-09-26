@@ -127,7 +127,10 @@ const DashboardPage = () => {
         </div>
 
         <>
-          <SectionTitleLineWithButton icon={mdiAccountMultiple} title="Youths" />
+          <SectionTitleLineWithButton
+            icon={mdiAccountMultiple}
+            title={userRole === 'user' ? 'Registered Youths' : 'Admins'}
+          />
 
           <CardBox hasTable>
             <div className="grid grid-cols-1 md:grid-cols-12 items-center px-5 gap-2 sm:gap-5 py-10">
