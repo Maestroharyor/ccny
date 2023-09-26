@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { setUser } from '@/stores/mainSlice'
 import { useDispatch } from 'react-redux'
 import { User } from '@/interfaces'
+import { capitalizeFirstCharacter } from '@/utils'
 
 type Props = {
   isUserAddLoading: boolean
@@ -118,7 +119,9 @@ const AddAdminUserForm = ({
               </tr>
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Gender</th>
-                <td className="whitespace-nowrap px-4 py-2 text-gray-600">{newUser?.gender}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                  {capitalizeFirstCharacter(newUser?.gender)}
+                </td>
               </tr>
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Zone</th>

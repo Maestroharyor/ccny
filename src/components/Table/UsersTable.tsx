@@ -8,6 +8,7 @@ import CardBoxModal from '../CardBox/Modal'
 import UserAvatar from '../UserAvatar'
 import moment from 'moment'
 import NumberDynamic from '../NumberDynamic'
+import { capitalizeFirstCharacter } from '@/utils'
 
 type Props = {
   users: User[]
@@ -82,7 +83,7 @@ const UsersTable = ({ users, userRole }: Props) => {
               <tr>
                 <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Gender</th>
                 <td className="whitespace-nowrap px-4 py-2 text-gray-600">
-                  {selectedUser?.gender}
+                  {capitalizeFirstCharacter(selectedUser?.gender)}
                 </td>
               </tr>
               <tr>
@@ -149,7 +150,9 @@ const UsersTable = ({ users, userRole }: Props) => {
               <th>Full Name</th>
               <th>Email Address</th>
               <th>Phone Number</th>
-              {userRole === 'user' && <th>Portfolio</th>}
+              <th>Gender</th>
+              {/* {userRole === 'user' && <th>Portfolio</th>} */}
+              <th>Unique Code</th>
               <th>Zone</th>
               {userRole === 'user' && <th>Date of Birth</th>}
               <th>Date Registered</th>
@@ -165,9 +168,13 @@ const UsersTable = ({ users, userRole }: Props) => {
                 <td data-label="Name">
                   {user.firstName} {user.lastName}
                 </td>
-                <td data-label="Email Address">{user.email}</td>
-                <td data-label="Phone Number">{user.phoneNumber}</td>
-                {userRole === 'user' && <td data-label="Portfolio">{user.portfolio}</td>}
+                <td data-label="Email Address">{user.email || '-'}</td>
+                <td data-label="Phone Number">{user.phoneNumber || '-'}</td>
+                <td data-label="Gender">
+                  {user.gender ? capitalizeFirstCharacter(user.gender) : '-'}
+                </td>
+                {/* {userRole === 'user' && <td data-label="Portfolio">{user.portfolio}</td>} */}
+                <td data-label="Unique Code">#{user.uniqueCode}</td>
                 <td data-label="Zone">{user.zone}</td>
                 {userRole === 'user' && (
                   <td data-label="Date of Birth">

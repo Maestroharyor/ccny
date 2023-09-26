@@ -1,4 +1,5 @@
 import { RootState } from '@/stores/store'
+import { capitalizeFirstCharacter } from '@/utils'
 import React from 'react'
 import { useSelector } from 'react-redux'
 
@@ -27,7 +28,7 @@ const AccountPage = () => {
           </div>
           <div>
             <p className="text-base font-medium text-gray-500">Gender</p>
-            <p className="text-xl font-bold">{user.gender}</p>
+            <p className="text-xl font-bold">{capitalizeFirstCharacter(user.gender)}</p>
           </div>
           <div>
             <p className="text-base font-medium text-gray-500">Event Code</p>

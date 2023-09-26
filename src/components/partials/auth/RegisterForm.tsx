@@ -28,6 +28,7 @@ const RegisterForm = () => {
     paymentTransactionReference: '',
   })
   const [hasPaid, setHasPaid] = useState(false)
+  const [reference, setReference] = useState<any>()
 
   const handleChange = (
     e:
@@ -68,12 +69,8 @@ const RegisterForm = () => {
       amountPaid: amountToPay,
     }))
     setHasPaid(true)
-    setForm({
-      ...form,
-      paymentTransactionReference: reference.reference,
-      paymentTransaction: reference.transaction,
-    })
-    registerUser()
+    setReference(reference)
+    registerUser(reference)
   }
 
   // you can call this function anything
@@ -88,16 +85,21 @@ const RegisterForm = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (hasPaid) {
-      registerUser()
+      registerUser(reference)
     } else {
       initializePayment(onSuccess as () => void, onClose)
     }
   }
 
-  const registerUser = async () => {
+  const registerUser = async (passedReference: any) => {
     setIsLoading(true)
     try {
-      const { data } = await axios.post('/api/auth/register', { ...form, amountPaid: amountToPay })
+      const { data } = await axios.post('/api/auth/register', {
+        ...form,
+        amountPaid: amountToPay,
+        paymentTransactionReference: passedReference?.reference,
+        paymentTransaction: passedReference?.transaction,
+      })
       dispatch(setUser(data.data))
       message.success('Registration Successful')
       if (data?.data?.user?.userRole === 'user') {

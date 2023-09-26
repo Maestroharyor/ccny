@@ -11,5 +11,6 @@ export function generateRandomCode(length: number): string {
 }
 
 export function capitalizeFirstCharacter(str: string): string {
+  if (!str) return str || ''
   return str[0].toUpperCase() + str.slice(1)
 }
