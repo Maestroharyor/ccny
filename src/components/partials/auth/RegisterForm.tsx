@@ -96,15 +96,15 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (paymentMethod.toLowerCase() === 'transfer') {
-      setIsTransferModalActive(true)
-    } else {
-      if (hasPaid) {
-        registerUser(reference)
-      } else {
-        initializePayment(onSuccess as () => void, onClose)
-      }
-    }
+    // if (paymentMethod.toLowerCase() === 'transfer') {
+    setIsTransferModalActive(true)
+    // } else {
+    //   if (hasPaid) {
+    //     registerUser(reference)
+    //   } else {
+    //     initializePayment(onSuccess as () => void, onClose)
+    //   }
+    // }
   }
 
   const registerUser = async (passedReference: any) => {
@@ -291,7 +291,7 @@ const RegisterForm = () => {
                 onChange={handleChange}
               />
             </label>
-            <label className="block">
+            {/* <label className="block">
               <span className="block mb-1 text-xs font-medium text-gray-700">Payment Method</span>
               <fieldset className="space-y-4">
                 <legend className="sr-only">Payment Method</legend>
@@ -331,17 +331,18 @@ const RegisterForm = () => {
                         <p className="text-gray-700">{option.label}</p>
                       </div>
 
-                      {/* <p className="text-gray-900">{option.price}</p> */}
+                     
                     </label>
                   </div>
                 ))}
               </fieldset>
-            </label>
+            </label> */}
 
             <button
               type="submit"
               className="w-full btn btn-primary btn-lg flex justify-center items-center gap-2"
-              disabled={isLoading || !paymentMethod}
+              // disabled={isLoading || !paymentMethod}
+              disabled={isLoading}
             >
               {isLoading && <FaCircleNotch className="animate-spin" />}
               <span>{isLoading ? 'Registering' : 'Register'}</span>
