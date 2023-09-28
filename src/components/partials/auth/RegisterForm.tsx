@@ -30,7 +30,7 @@ const RegisterForm = () => {
   })
   const [hasPaid, setHasPaid] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState('Online')
-  const [isTransferModalActive, setIsTransferModalActive] = useState(true)
+  const [isTransferModalActive, setIsTransferModalActive] = useState(false)
 
   const paymentOptions = [
     { value: 'Online', label: 'Online' },
