@@ -33,8 +33,8 @@ const RegisterForm = () => {
   const [isTransferModalActive, setIsTransferModalActive] = useState(false)
 
   const paymentOptions = [
-    { value: 'Online', label: 'Online' },
-    { value: 'Transfer', label: 'Transfer' },
+    { value: 'Online', label: 'Pay Online With PayStack' },
+    { value: 'Transfer', label: 'Pay With Transfer' },
   ]
 
   const handlePaymentMethodChange = (event) => {
