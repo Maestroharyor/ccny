@@ -18,6 +18,11 @@ interface IUser extends Document {
   paymentMethod: string
   paymentTransaction: string
   paymentTransactionReference: string
+  bankName: string
+  accountName: string
+  accountNumber: string
+  paymentProofImage: string
+  paymentVerified: boolean
 }
 
 const userSchema = new mongoose.Schema<IUser>(
@@ -44,6 +49,11 @@ const userSchema = new mongoose.Schema<IUser>(
     paymentMethod: { type: String, lowercase: true },
     paymentTransaction: String,
     paymentTransactionReference: String,
+    bankName: { type: String },
+    accountName: { type: String },
+    accountNumber: { type: String },
+    paymentProofImage: { type: String },
+    paymentVerified: { type: Boolean, default: false },
   },
   {
     timestamps: true,

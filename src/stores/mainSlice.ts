@@ -19,6 +19,11 @@ interface MainState {
   token: string
   gender: string
   isLoggedIn: boolean
+  bankName: string
+  accountName: string
+  accountNumber: string
+  paymentProofImage: string
+  paymentVerified: boolean
 }
 
 const initialState: MainState = {
@@ -39,6 +44,11 @@ const initialState: MainState = {
   token: '',
   gender: '',
   isLoggedIn: false,
+  bankName: '',
+  accountName: '',
+  accountNumber: '',
+  paymentProofImage: '',
+  paymentVerified: false,
 }
 
 export const mainSlice = createSlice({
@@ -62,6 +72,11 @@ export const mainSlice = createSlice({
       state.userRole = action.payload.user.userRole
       state.token = action.payload.token
       state.gender = action.payload.user.gender
+      state.bankName = action.payload.user.bankName
+      state.accountName = action.payload.user.accountName
+      state.accountNumber = action.payload.user.accountNumber
+      state.paymentProofImage = action.payload.user.paymentProofImage
+      state.paymentVerified = action.payload.user.paymentVerified
       state.isLoggedIn = true
     },
     logOut: (state) => {
@@ -81,6 +96,11 @@ export const mainSlice = createSlice({
       state.userRole = ''
       state.token = ''
       state.gender = ''
+      state.bankName = ''
+      state.accountName = ''
+      state.accountNumber = ''
+      state.paymentProofImage = ''
+      state.paymentVerified = false
       state.isLoggedIn = false
     },
   },

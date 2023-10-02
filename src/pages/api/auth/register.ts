@@ -3,12 +3,24 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import connectDB from '@/db'
 import User from '@/models/User'
 import jwt from 'jsonwebtoken'
+import multer from 'multer' // For file uploads
+import path from 'path'
 import { generateRandomCode } from '@/utils'
 import { sendEmail } from '@/utils/mailer'
 import {
   generateRegistrationSuccessHTMLToAdmin,
   generateRegistrationSuccessHTMLToUser,
 } from '@/utils/emails'
+
+// // Set up multer for handling image uploads
+// const storage = multer.diskStorage({
+//   destination: path.join(__dirname, 'uploads'), // Set the upload directory
+//   filename: (req, file, callback) => {
+//     callback(null, Date.now() + path.extname(file.originalname)) // Rename uploaded files with timestamps
+//   },
+// })
+
+// const upload = multer({ storage })
 
 connectDB()
 
@@ -30,7 +42,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         paymentTransaction,
         paymentTransactionReference,
         userRole,
+        bankName,
+        accountName,
+        accountNumber,
       } = req.body
+
+      console.log(
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        portfolio,
+        amountPaid,
+        dateOfBirth,
+        zone,
+        gender,
+        password,
+        paymentMethod,
+        paymentTransaction,
+        paymentTransactionReference,
+        userRole,
+        bankName,
+        accountName,
+        accountNumber
+      )
+
+      // console.log(req.body)
 
       if (!email && !phoneNumber) {
         return res.status(400).json({
@@ -39,21 +76,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
       }
 
-      // Generate a unique 6-digit alphanumeric code (You can use a library like shortid)
-      const uniqueCode = generateRandomCode(6) // Replace with actual code generation logic
+      // Handle file upload for paymentProofImage
+      // upload.single('paymentProofImage')(req, res, async (err) => {
+      // if (err) {
+      //   return res.status(400).json({
+      //     success: false,
+      //     message: 'Error uploading file',
+      //     error: err.message,
+      //   })
+      // }
 
-      // Check if email, phone number, and uniqueCode are unique
-      const existingUser = await User.findOne({
-        $or: [{ email }, { phoneNumber }],
-      })
+      // File uploaded successfully, you can access it as req.file
+      // const paymentProofImagePath = (req as any).file ? (req as any).file.path : null
 
-      if (existingUser) {
-        return res.status(400).json({
-          success: false,
-          message: 'Email or phone number is already in use',
-        })
-      }
-
+      // Create a new user with the paymentProofImagePath
       const user = new User({
         firstName,
         lastName,
@@ -63,17 +99,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         amountPaid,
         dateOfBirth,
         zone,
-        uniqueCode,
         gender,
         password,
         paymentMethod,
         paymentTransaction,
         paymentTransactionReference,
+        bankName,
+        accountName,
+        accountNumber,
+        // paymentProofImage: paymentProofImagePath, // Include the uploaded image path
         userRole: userRole ? userRole : 'user',
       })
 
       await user.save()
 
+      // Send registration emails
       await Promise.all([
         sendEmail({
           to: user.email,
@@ -86,6 +126,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           html: generateRegistrationSuccessHTMLToAdmin(user, 'New Registration Alert'),
         }),
       ])
+
       // Generate a token for authentication
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET) // Replace with your secret key
 
@@ -94,6 +135,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         message: 'User registered successfully',
         data: { user, token }, // Include both user data and token
       })
+      // })
     } catch (error) {
       res.status(400).json({
         success: false,

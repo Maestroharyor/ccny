@@ -27,9 +27,14 @@ const RegisterForm = () => {
     password: '',
     paymentTransaction: '',
     paymentTransactionReference: '',
+    bankName: '',
+    accountName: '',
+    accountNumber: '',
+    paymentProofImage: null,
   })
+  const [registrationStep, setRegistrationStep] = useState(1)
   const [hasPaid, setHasPaid] = useState(false)
-  const [paymentMethod, setPaymentMethod] = useState('Online')
+  const [paymentMethod, setPaymentMethod] = useState('Transfer')
   const [isTransferModalActive, setIsTransferModalActive] = useState(false)
 
   const paymentOptions = [
@@ -94,7 +99,7 @@ const RegisterForm = () => {
     }, 1000)
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleStep1Submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // if (paymentMethod.toLowerCase() === 'transfer') {
     setIsTransferModalActive(true)
@@ -107,16 +112,31 @@ const RegisterForm = () => {
     // }
   }
 
+  const handleStep2Submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    // console.log(form)
+    // for (const key in form) {
+    //   if (form[key] !== null) {
+    //     console.log(key, form[key])
+    //   }
+    // }
+    registerUser(reference)
+  }
+
   const registerUser = async (passedReference: any) => {
     setIsLoading(true)
     try {
-      const { data } = await axios.post('/api/auth/register', {
-        ...form,
-        paymentMethod,
-        amountPaid: amountToPay,
-        paymentTransactionReference: passedReference?.reference,
-        paymentTransaction: passedReference?.transaction,
-      })
+      const formDataToSend = new FormData()
+      const { paymentProofImage, ...rest } = form
+      for (const key in rest) {
+        if (form[key] !== null) {
+          formDataToSend.append(key, form[key])
+        }
+      }
+
+
+      const { data } = await axios.post('/api/auth/register', form)
       dispatch(setUser(data.data))
       message.success('Registration Successful')
       if (data?.data?.user?.userRole === 'user') {
@@ -135,6 +155,15 @@ const RegisterForm = () => {
       setIsLoading(false)
     }
   }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files[0]
+    setForm({
+      ...form,
+      paymentProofImage: file, // Store the selected file
+    })
+  }
+
   return (
     <>
       <CardBoxModal
@@ -144,9 +173,10 @@ const RegisterForm = () => {
         buttonLabel="Continue"
         isActive={isTransferModalActive}
         onConfirm={() => {
-          message.info('Registering with Transfer')
-          registerUser(reference)
+          // message.info('Registering with Transfer')
+          // registerUser(reference)
           setIsTransferModalActive(false)
+          setRegistrationStep(2)
         }}
         onCancel={() => setIsTransferModalActive(false)}
       >
@@ -189,109 +219,110 @@ const RegisterForm = () => {
               Login
             </Link>
           </p>
-          <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
-            <div className="flex flex-col md:flex-row gap-4">
-              <label className="block flex-1">
-                <span className="block mb-1 text-xs font-medium text-gray-700">First Name</span>
+          {registrationStep === 1 ? (
+            <form className="mt-8 space-y-4" onSubmit={handleStep1Submit}>
+              <div className="flex flex-col md:flex-row gap-4">
+                <label className="block flex-1">
+                  <span className="block mb-1 text-xs font-medium text-gray-700">First Name</span>
+                  <input
+                    className="form-input"
+                    type="text"
+                    placeholder="John"
+                    name="firstName"
+                    required
+                    onChange={handleChange}
+                  />
+                </label>
+                <label className="block flex-1">
+                  <span className="block mb-1 text-xs font-medium text-gray-700">Last Name</span>
+                  <input
+                    className="form-input"
+                    type="text"
+                    placeholder="Doe"
+                    name="lastName"
+                    required
+                    onChange={handleChange}
+                  />
+                </label>
+              </div>
+
+              <label className="block">
+                <span className="block mb-1 text-xs font-medium text-gray-700">Your Email</span>
+                <input
+                  className="form-input"
+                  type="email"
+                  placeholder="Ex. james@bond.com"
+                  inputMode="email"
+                  name="email"
+                  onChange={handleChange}
+                />
+              </label>
+              <label className="block">
+                <span className="block mb-1 text-xs font-medium text-gray-700">Phone Number</span>
                 <input
                   className="form-input"
                   type="text"
-                  placeholder="John"
-                  name="firstName"
+                  placeholder="+234900000000"
+                  name="phoneNumber"
+                  onChange={handleChange}
+                />
+              </label>
+              <label className="block">
+                <span className="block mb-1 text-xs font-medium text-gray-700">Zone</span>
+                <input
+                  className="form-input"
+                  type="text"
+                  placeholder=""
+                  name="zone"
                   required
                   onChange={handleChange}
                 />
               </label>
-              <label className="block flex-1">
-                <span className="block mb-1 text-xs font-medium text-gray-700">Last Name</span>
+              <label className="block">
+                <span className="block mb-1 text-xs font-medium text-gray-700">Portfolio</span>
+                <textarea
+                  name="portfolio"
+                  id=""
+                  cols={30}
+                  rows={2}
+                  className="resize-none w-full"
+                  onChange={handleChange}
+                ></textarea>
+              </label>
+              <label className="block text-sm mb-1" htmlFor="gender">
+                Gender
+              </label>
+              <select
+                className="form-select"
+                id="gender"
+                name="gender"
+                placeholder="Select gender"
+                onChange={handleChange}
+                required
+              >
+                <option value={''}>Select Gender</option>
+                <option value={'male'}>Male</option>
+                <option value={'female'}>Female</option>
+              </select>
+
+              <label className="block">
+                <span className="block mb-1 text-xs font-medium text-gray-700">Date of Birth</span>
+                <DatePicker onChange={onDateChange} className="w-full" size="large" />
+              </label>
+              <label className="block">
+                <span className="block mb-1 text-xs font-medium text-gray-700">
+                  Create a password
+                </span>
                 <input
                   className="form-input"
-                  type="text"
-                  placeholder="Doe"
-                  name="lastName"
+                  type="password"
+                  placeholder="••••••••"
                   required
+                  name="password"
                   onChange={handleChange}
                 />
               </label>
-            </div>
-
-            <label className="block">
-              <span className="block mb-1 text-xs font-medium text-gray-700">Your Email</span>
-              <input
-                className="form-input"
-                type="email"
-                placeholder="Ex. james@bond.com"
-                inputMode="email"
-                name="email"
-                onChange={handleChange}
-              />
-            </label>
-            <label className="block">
-              <span className="block mb-1 text-xs font-medium text-gray-700">Phone Number</span>
-              <input
-                className="form-input"
-                type="text"
-                placeholder="+234900000000"
-                name="phoneNumber"
-                onChange={handleChange}
-              />
-            </label>
-            <label className="block">
-              <span className="block mb-1 text-xs font-medium text-gray-700">Zone</span>
-              <input
-                className="form-input"
-                type="text"
-                placeholder=""
-                name="zone"
-                required
-                onChange={handleChange}
-              />
-            </label>
-            <label className="block">
-              <span className="block mb-1 text-xs font-medium text-gray-700">Portfolio</span>
-              <textarea
-                name="portfolio"
-                id=""
-                cols={30}
-                rows={2}
-                className="resize-none w-full"
-                onChange={handleChange}
-              ></textarea>
-            </label>
-            <label className="block text-sm mb-1" htmlFor="gender">
-              Gender
-            </label>
-            <select
-              className="form-select"
-              id="gender"
-              name="gender"
-              placeholder="Select gender"
-              onChange={handleChange}
-              required
-            >
-              <option value={''}>Select Gender</option>
-              <option value={'male'}>Male</option>
-              <option value={'female'}>Female</option>
-            </select>
-
-            <label className="block">
-              <span className="block mb-1 text-xs font-medium text-gray-700">Date of Birth</span>
-              <DatePicker onChange={onDateChange} className="w-full" size="large" />
-            </label>
-            <label className="block">
-              <span className="block mb-1 text-xs font-medium text-gray-700">
-                Create a password
-              </span>
-              <input
-                className="form-input"
-                type="password"
-                placeholder="••••••••"
-                required
-                name="password"
-                onChange={handleChange}
-              />
-            </label>
-            {/* <label className="block">
+              {/* <label className="block">
               <span className="block mb-1 text-xs font-medium text-gray-700">Payment Method</span>
               <fieldset className="space-y-4">
                 <legend className="sr-only">Payment Method</legend>
@@ -338,16 +369,125 @@ const RegisterForm = () => {
               </fieldset>
             </label> */}
 
-            <button
-              type="submit"
-              className="w-full btn btn-primary btn-lg flex justify-center items-center gap-2"
-              // disabled={isLoading || !paymentMethod}
-              disabled={isLoading}
-            >
-              {isLoading && <FaCircleNotch className="animate-spin" />}
-              <span>{isLoading ? 'Registering' : 'Register'}</span>
-            </button>
-          </form>
+              <button
+                type="submit"
+                className="w-full btn btn-primary btn-lg flex justify-center items-center gap-2"
+                // disabled={isLoading || !paymentMethod}
+                disabled={isLoading}
+              >
+                {isLoading && <FaCircleNotch className="animate-spin" />}
+                <span>{isLoading ? 'Registering' : 'Continue'}</span>
+              </button>
+            </form>
+          ) : (
+            <form className="mt-8 space-y-4" onSubmit={handleStep2Submit}>
+              <label className="block flex-1">
+                <span className="block mb-1 text-xs font-medium text-gray-700">Bank Name</span>
+                <input
+                  className="form-input"
+                  type="text"
+                  placeholder=""
+                  name="bankName"
+                  required
+                  onChange={handleChange}
+                />
+              </label>
+
+              <label className="block flex-1">
+                <span className="block mb-1 text-xs font-medium text-gray-700">Account Number</span>
+                <input
+                  className="form-input"
+                  type="text"
+                  placeholder=""
+                  name="accountNumber"
+                  required
+                  onChange={handleChange}
+                />
+              </label>
+
+              <label className="block flex-1">
+                <span className="block mb-1 text-xs font-medium text-gray-700">Account Name</span>
+                <input
+                  className="form-input"
+                  type="text"
+                  placeholder=""
+                  name="accountName"
+                  required
+                  onChange={handleChange}
+                />
+              </label>
+
+              <label className="block flex-1">
+                <span className="block mb-1 text-xs font-medium text-gray-700">
+                  Proof Of Payment
+                </span>
+                <input
+                  className="form-input"
+                  type="file"
+                  placeholder=""
+                  required
+                  onChange={handleFileChange}
+                />
+              </label>
+
+              {/* <label className="block">
+              <span className="block mb-1 text-xs font-medium text-gray-700">Payment Method</span>
+              <fieldset className="space-y-4">
+                <legend className="sr-only">Payment Method</legend>
+
+                {paymentOptions.map((option) => (
+                  <div key={option.value}>
+                    <input
+                      type="radio"
+                      name="paymentOption"
+                      value={option.value}
+                      id={option.value}
+                      className="peer hidden [&:checked_+_label_svg]:block"
+                      checked={paymentMethod === option.value}
+                      onChange={handlePaymentMethodChange}
+                    />
+
+                    <label
+                      htmlFor={option.value}
+                      className="flex cursor-pointer items-center justify-between rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500"
+                    >
+                      <div className="flex items-center gap-2">
+                        <svg
+                          className={`h-5 w-5 text-blue-600 ${
+                            paymentMethod === option.value ? '' : 'hidden'
+                          }`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+
+                        <p className="text-gray-700">{option.label}</p>
+                      </div>
+
+                     
+                    </label>
+                  </div>
+                ))}
+              </fieldset>
+            </label> */}
+
+              <button
+                type="submit"
+                className="w-full btn btn-primary btn-lg flex justify-center items-center gap-2"
+                // disabled={isLoading || !paymentMethod}
+                disabled={isLoading}
+              >
+                {isLoading && <FaCircleNotch className="animate-spin" />}
+                <span>{isLoading ? 'Registering' : 'Register'}</span>
+              </button>
+            </form>
+          )}
 
           {/* <p className="my-5 text-xs font-medium text-center text-gray-700">
           By clicking "Sign Up" you agree to our

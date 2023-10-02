@@ -16,9 +16,14 @@ export type User = {
   portfolio: string
   uniqueCode: string
   userRole: string
-  paymentMethod:string
+  paymentMethod: string
   gender: string
   zone: string
+  bankName: string
+  accountName: string
+  accountNumber: string
+  paymentProofImage: string
+  paymentVerified: boolean
 }
 
 export type MenuAsideItem = {

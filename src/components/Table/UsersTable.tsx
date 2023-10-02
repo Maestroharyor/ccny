@@ -103,6 +103,38 @@ const UsersTable = ({ users, userRole }: Props) => {
                   #{selectedUser?.uniqueCode}
                 </td>
               </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">Bank Name</th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                  {selectedUser?.bankName}
+                </td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
+                  Account Name
+                </th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                  {selectedUser?.accountName}
+                </td>
+              </tr>
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
+                  Account Number
+                </th>
+                <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                  {selectedUser?.accountNumber}
+                </td>
+              </tr>
+              {selectedUser?.paymentProofImage && (
+                <tr>
+                  <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
+                    Proof of Payment
+                  </th>
+                  <td className="whitespace-nowrap px-4 py-2 text-gray-600">
+                    <img src={selectedUser?.paymentProofImage} alt="" />
+                  </td>
+                </tr>
+              )}
               {selectedUser.paymentMethod && (
                 <tr>
                   <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
