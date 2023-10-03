@@ -39,6 +39,6 @@ export async function sendEmail({ to, subject, text, html }: EmailOptions) {
     console.log(`Email sent to ${to}`)
   } catch (error) {
     console.error('Error sending email:', error)
-    throw error // Rethrow the error for handling in the route
+    // throw error // Rethrow the error for handling in the route
   }
 }

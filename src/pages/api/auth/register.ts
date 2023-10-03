@@ -88,8 +88,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       //   })
       // }
 
-      // File uploaded successfully, you can access it as req.file
-      // const paymentProofImagePath = (req as any).file ? (req as any).file.path : null
+      const uniqueCode = generateRandomCode(6)
 
       // Create a new user with the paymentProofImagePath
       const user = new User({
@@ -111,23 +110,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         accountNumber,
         paymentProofImage, // Include the uploaded image path
         userRole: userRole ? userRole : 'user',
+        uniqueCode,
       })
 
       await user.save()
 
       // Send registration emails
-      await Promise.all([
-        sendEmail({
-          to: user.email,
-          subject: 'Registration Successful',
-          html: generateRegistrationSuccessHTMLToUser(user, 'Registration Successful'),
-        }),
-        sendEmail({
-          to: process.env.ADMIN_EMAIL_NOTIFICATION,
-          subject: 'New Registration Alert',
-          html: generateRegistrationSuccessHTMLToAdmin(user, 'New Registration Alert'),
-        }),
-      ])
+      // await Promise.all([
+      //   sendEmail({
+      //     to: user.email,
+      //     subject: 'Registration Successful',
+      //     html: generateRegistrationSuccessHTMLToUser(user, 'Registration Successful'),
+      //   }),
+      //   sendEmail({
+      //     to: process.env.ADMIN_EMAIL_NOTIFICATION,
+      //     subject: 'New Registration Alert',
+      //     html: generateRegistrationSuccessHTMLToAdmin(user, 'New Registration Alert'),
+      //   }),
+      // ])
 
       // Generate a token for authentication
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET) // Replace with your secret key
@@ -139,6 +139,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       })
       // })
     } catch (error) {
+      console.log(error)
       res.status(400).json({
         success: false,
         message: 'Registration failed',
