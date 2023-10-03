@@ -131,7 +131,11 @@ const UsersTable = ({ users, userRole }: Props) => {
                     Proof of Payment
                   </th>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-600">
-                    <img src={selectedUser?.paymentProofImage} alt="" />
+                    <img
+                      src={selectedUser?.paymentProofImage}
+                      alt=""
+                      className="max-w-[500px] w-full"
+                    />
                   </td>
                 </tr>
               )}

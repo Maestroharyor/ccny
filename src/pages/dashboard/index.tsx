@@ -112,7 +112,7 @@ const DashboardPage = () => {
                 number={stats.totalUsers}
                 label="Youths Registered"
               />
-              <CardBoxWidget
+              {/* <CardBoxWidget
                 // trendLabel="16%"
                 // trendType="down"
                 trendColor="danger"
@@ -121,7 +121,7 @@ const DashboardPage = () => {
                 number={stats.totalAmountPaid / 100}
                 numberPrefix="₦"
                 label="Total Payments"
-              />
+              /> */}
             </>
           )}
         </div>
