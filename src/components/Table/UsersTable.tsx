@@ -15,7 +15,7 @@ type Props = {
   userRole: string
 }
 const UsersTable = ({ users, userRole }: Props) => {
-  const perPage = 10
+  const perPage = 30
 
   const [currentPage, setCurrentPage] = useState(0)
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
