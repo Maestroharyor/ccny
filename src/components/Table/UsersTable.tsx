@@ -135,7 +135,7 @@ const UsersTable = ({ users, userRole }: Props) => {
                   </td>
                 </tr>
               )}
-              {selectedUser.paymentMethod && (
+              {/* {selectedUser.paymentMethod && (
                 <tr>
                   <th className="whitespace-nowrap px-4 py-2 text-gray-900 font-bold">
                     Payment Method
@@ -144,8 +144,8 @@ const UsersTable = ({ users, userRole }: Props) => {
                     {capitalizeFirstCharacter(selectedUser?.paymentMethod)}
                   </td>
                 </tr>
-              )}
-              {selectedUser && selectedUser?.paymentMethod.toLowerCase() === 'online' && (
+              )} */}
+              {/* {selectedUser && selectedUser?.paymentMethod.toLowerCase() === 'online' && (
                 <>
                   {' '}
                   <tr>
@@ -173,7 +173,7 @@ const UsersTable = ({ users, userRole }: Props) => {
                     </td>
                   </tr>
                 </>
-              )}
+              )} */}
             </tbody>
           </table>
         </div>
