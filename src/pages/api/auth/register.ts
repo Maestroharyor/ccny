@@ -45,6 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         bankName,
         accountName,
         accountNumber,
+        paymentProofImage,
       } = req.body
 
       console.log(
@@ -64,7 +65,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         userRole,
         bankName,
         accountName,
-        accountNumber
+        accountNumber,
+        paymentProofImage
       )
 
       // console.log(req.body)
@@ -107,7 +109,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         bankName,
         accountName,
         accountNumber,
-        // paymentProofImage: paymentProofImagePath, // Include the uploaded image path
+        paymentProofImage, // Include the uploaded image path
         userRole: userRole ? userRole : 'user',
       })
 

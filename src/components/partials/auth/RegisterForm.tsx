@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { setUser } from '@/stores/mainSlice'
 import { useDispatch } from 'react-redux'
 import CardBoxModal from '@/components/CardBox/Modal'
+import ImageKit from 'imagekit-javascript'
 
 const RegisterForm = () => {
   const router = useRouter()
@@ -30,12 +31,14 @@ const RegisterForm = () => {
     bankName: '',
     accountName: '',
     accountNumber: '',
-    paymentProofImage: null,
+    paymentProofImage: '',
   })
   const [registrationStep, setRegistrationStep] = useState(1)
   const [hasPaid, setHasPaid] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState('Transfer')
   const [isTransferModalActive, setIsTransferModalActive] = useState(false)
+  const [isImageUploading, setIsImageUploading] = useState(false)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
   const paymentOptions = [
     { value: 'Online', label: 'Pay Online With PayStack' },
@@ -121,6 +124,10 @@ const RegisterForm = () => {
     //     console.log(key, form[key])
     //   }
     // }
+    if (!form.paymentProofImage) {
+      message.error('Please upload your proof of payment')
+      return
+    }
     registerUser(reference)
   }
 
@@ -134,7 +141,6 @@ const RegisterForm = () => {
           formDataToSend.append(key, form[key])
         }
       }
-
 
       const { data } = await axios.post('/api/auth/register', form)
       dispatch(setUser(data.data))
@@ -156,14 +162,49 @@ const RegisterForm = () => {
     }
   }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files[0]
-    setForm({
-      ...form,
-      paymentProofImage: file, // Store the selected file
-    })
+    setSelectedFile(file)
+    const isLt2M = file.size / 1024 / 1024 < 2
+    if (!isLt2M) {
+      return message.error('Image must smaller than 2MB!')
+    }
+    setIsImageUploading(true)
+    try {
+      const { data } = await axios.get('/api/uploads/get-auth')
+      const imagekit = new ImageKit({
+        publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY || '',
+        urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || '',
+      })
+
+      const response = await imagekit.upload({
+        // xhr: customXHR, // Use this if you want to track upload progress
+        file,
+        fileName: file.name,
+        folder: `/ccny`,
+        token: data.id.token,
+        signature: data.id.signature,
+        expire: data.id.expire,
+      })
+
+      setForm({
+        ...form,
+        paymentProofImage: response.url,
+      })
+      message.success('Proof of Payment uploaded successfully')
+    } catch (error) {
+      console.log(error)
+      message.error('Unable to upload image')
+    } finally {
+      setIsImageUploading(false)
+    }
+    // setForm({
+    //   ...form,
+    //   paymentProofImage: file, // Store the selected file
+    // })
   }
 
+  console.log(form)
   return (
     <>
       <CardBoxModal
@@ -428,6 +469,7 @@ const RegisterForm = () => {
                   required
                   onChange={handleFileChange}
                 />
+                {isImageUploading && <span>Uploading...</span>}
               </label>
 
               {/* <label className="block">
@@ -481,7 +523,7 @@ const RegisterForm = () => {
                 type="submit"
                 className="w-full btn btn-primary btn-lg flex justify-center items-center gap-2"
                 // disabled={isLoading || !paymentMethod}
-                disabled={isLoading}
+                disabled={isLoading || isImageUploading}
               >
                 {isLoading && <FaCircleNotch className="animate-spin" />}
                 <span>{isLoading ? 'Registering' : 'Register'}</span>
