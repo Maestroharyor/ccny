@@ -204,7 +204,7 @@ const RegisterForm = () => {
     // })
   }
 
-  console.log(form)
+  // console.log(form)
   return (
     <>
       <CardBoxModal
