@@ -468,6 +468,7 @@ const RegisterForm = () => {
                   placeholder=""
                   required
                   onChange={handleFileChange}
+                  accept="image/*"
                 />
                 {isImageUploading && <span>Uploading...</span>}
               </label>
@@ -523,7 +524,14 @@ const RegisterForm = () => {
                 type="submit"
                 className="w-full btn btn-primary btn-lg flex justify-center items-center gap-2"
                 // disabled={isLoading || !paymentMethod}
-                disabled={isLoading || isImageUploading}
+                disabled={
+                  isLoading ||
+                  isImageUploading ||
+                  !form.paymentProofImage ||
+                  !form.bankName ||
+                  !form.accountNumber ||
+                  !form.accountName
+                }
               >
                 {isLoading && <FaCircleNotch className="animate-spin" />}
                 <span>{isLoading ? 'Registering' : 'Register'}</span>

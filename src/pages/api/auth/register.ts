@@ -91,7 +91,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // const uniqueCode = generateRandomCode(6)
       // Calculate the next unique code based on the number of admin users
       const adminUserCount = await User.countDocuments({ userRole: 'user' })
-      const uniqueCode = `NYSC1${String(1000 + adminUserCount).padStart(4, '0')}`
+      const uniqueCode = `NYSC${String(1000 + adminUserCount).padStart(4, '0')}`
 
       // Create a new user with the paymentProofImagePath
       const user = new User({
