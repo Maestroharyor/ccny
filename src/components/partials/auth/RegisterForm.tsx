@@ -295,6 +295,7 @@ const RegisterForm = () => {
                   placeholder="Ex. james@bond.com"
                   inputMode="email"
                   name="email"
+                  id="email"
                   onChange={handleChange}
                 />
               </label>
@@ -305,6 +306,7 @@ const RegisterForm = () => {
                   type="text"
                   placeholder="+234900000000"
                   name="phoneNumber"
+                  id="phoneNumber"
                   onChange={handleChange}
                 />
               </label>
@@ -431,32 +433,39 @@ const RegisterForm = () => {
                   name="bankName"
                   required
                   onChange={handleChange}
+                  id="bankName"
                 />
               </label>
 
-              <label className="block flex-1">
-                <span className="block mb-1 text-xs font-medium text-gray-700">Account Number</span>
-                <input
-                  className="form-input"
-                  type="text"
-                  placeholder=""
-                  name="accountNumber"
-                  required
-                  onChange={handleChange}
-                />
-              </label>
+              <div className="flex flex-col md:flex-row gap-4">
+                <label className="block flex-1">
+                  <span className="block mb-1 text-xs font-medium text-gray-700">
+                    Account Number
+                  </span>
+                  <input
+                    className="form-input"
+                    type="text"
+                    placeholder=""
+                    name="accountNumber"
+                    id="accountNumber"
+                    required
+                    onChange={handleChange}
+                  />
+                </label>
 
-              <label className="block flex-1">
-                <span className="block mb-1 text-xs font-medium text-gray-700">Account Name</span>
-                <input
-                  className="form-input"
-                  type="text"
-                  placeholder=""
-                  name="accountName"
-                  required
-                  onChange={handleChange}
-                />
-              </label>
+                <label className="block flex-1">
+                  <span className="block mb-1 text-xs font-medium text-gray-700">Account Name</span>
+                  <input
+                    className="form-input"
+                    type="text"
+                    placeholder=""
+                    name="accountName"
+                    id="accountName"
+                    required
+                    onChange={handleChange}
+                  />
+                </label>
+              </div>
 
               <label className="block flex-1">
                 <span className="block mb-1 text-xs font-medium text-gray-700">
