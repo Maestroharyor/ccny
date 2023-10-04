@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import connectDB from '@/db'
 import User from '@/models/User'
 import jwt from 'jsonwebtoken'
-import multer from 'multer' // For file uploads
+// import multer from 'multer' // For file uploads
 import path from 'path'
 import { generateRandomCode } from '@/utils'
 import { sendEmail } from '@/utils/mailer'
@@ -88,7 +88,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       //   })
       // }
 
-      const uniqueCode = generateRandomCode(6)
+      // const uniqueCode = generateRandomCode(6)
+      // Calculate the next unique code based on the number of admin users
+      const adminUserCount = await User.countDocuments({ userRole: 'user' })
+      const uniqueCode = `NYSC1${String(1000 + adminUserCount).padStart(4, '0')}`
 
       // Create a new user with the paymentProofImagePath
       const user = new User({
