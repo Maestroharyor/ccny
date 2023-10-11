@@ -22,13 +22,13 @@ const HomeMoreDetails = () => {
         </p>
 
         <div>
-          <ul className="list-none grid grid-cols-1 md:grid-cols-3 flex-wrap gap-5">
+          <ul className="list-none grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
             {items.map((item, index) => (
               <li
                 key={index}
-                className={`px-5 py-3 rounded-lg text-base border bg-white flex items-center gap-3  ${
-                  index === 3 ? 'col-span-3' : ''
-                }`}
+                className={`px-5 py-3 rounded-lg text-base border bg-white flex items-center gap-3
+             ${index === 3 ? 'md:col-span-3' : ''}
+                  `}
               >
                 <MdCheck />
                 <span>{item}</span>
