@@ -44,7 +44,7 @@ const DashboardPage = () => {
     data: userData,
     isLoading: isUsersLoading,
     error: userError,
-  } = useSWR(`/api/users?role=${userRole}&per_page=30&search=${searchText}`, fetcher)
+  } = useSWR(`/api/users?role=${userRole}&per_page=1500&search=${searchText}`, fetcher)
   useEffect(() => {
     if (userData) {
       setUsers(userData.data.users)

@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       const { role, search } = req.query
       const page = parseInt(req.query.page as string) || 1
-      const pageSize = parseInt(req.query.pageSize as string) || 20
+      const pageSize = parseInt(req.query.per_page as string) || 20
 
       const skip = (page - 1) * pageSize
 
