@@ -44,7 +44,7 @@ const CardBoxModal = ({
   return (
     <OverlayLayer onClick={onCancel} className={onCancel ? 'cursor-pointer' : ''}>
       <CardBox
-        className={`transition-transform shadow-lg w-screen md:w-4/6 h-fit z-50`}
+        className={`transition-transform shadow-lg w-screen md:w-4/6 h-full z-50`}
         isModal
         footer={footer}
       >
@@ -54,7 +54,7 @@ const CardBoxModal = ({
           )}
         </CardBoxComponentTitle>
 
-        <div className="space-y-3 overflow-y-auto">{children}</div>
+        <div className="space-y-3 h-full overflow-y-auto">{children}</div>
       </CardBox>
     </OverlayLayer>
   )

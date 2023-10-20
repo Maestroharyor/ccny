@@ -51,7 +51,7 @@ const UsersTable = ({ users, userRole }: Props) => {
         hideCancelButton
         onCancel={handleModalAction}
       >
-        <div className="overflow-x-auto overflow-y-auto h-[650px] lg:h-full">
+        <div className="overflow-x-auto overflow-y-auto h-[650px] lg:h-full pb-10">
           <table className="min-w-full  bg-white text-sm">
             <tbody className="divide-y divide-gray-300">
               <tr>
